@@ -3,8 +3,8 @@ TST_DIR     = test/
 BIN_DIR     = bin/
 SRC_BIN_DIR = $(BIN_DIR)$(SRC_DIR)
 TST_BIN_DIR = $(BIN_DIR)$(TST_DIR)
-SRC_CLS     = endgame.Main
-TST_CLS     = endgame.MainTest
+SRC_CLS     = endgame.EndGame
+TST_CLS     = endgame.EndGameTest
 TST_LIB     = /usr/share/java/junit-4.12.jar:/usr/share/java/hamcrest-core.jar
 
 default: clean build run

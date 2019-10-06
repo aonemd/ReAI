@@ -2,7 +2,7 @@ package endgame;
 
 import java.util.ArrayList;
 
-public class Main {
+public class EndGame {
     public static String solve(String grid, String strategy, boolean visualize) {
         // parse grid into useful information
         String[] gridInfo       = grid.split(";");
