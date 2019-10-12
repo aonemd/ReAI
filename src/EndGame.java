@@ -2,8 +2,11 @@ package endgame;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import search.SearchProblem;
+import search.Operator;
 
 public class EndGame extends SearchProblem {
     private String grid;
@@ -44,6 +47,17 @@ public class EndGame extends SearchProblem {
                         Integer.parseInt(warriorXYPositions[i+1])));
         }
 
+        Set<Operator> operators = new HashSet<Operator>();
+        operators.add(new Operator("up", 0));
+        operators.add(new Operator("down", 0));
+        operators.add(new Operator("right", 0));
+        operators.add(new Operator("left", 0));
+        operators.add(new Operator("collect", 0));
+        operators.add(new Operator("kill", 0));
+        operators.add(new Operator("snap", 0));
+
+        this.operators = operators;
+        this.initialState = new EndGameState();;
     }
 
     public static String solve(String grid, String strategy, boolean visualize) {
