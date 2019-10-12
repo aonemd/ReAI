@@ -1,5 +1,6 @@
 package endgame;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import search.SearchProblem;
@@ -10,8 +11,8 @@ public class EndGame extends SearchProblem {
     private int gridHeight;
     private Cell ironManPosition;
     private Cell thanosPosition;
-    private ArrayList<Cell> stonePositions;
-    private ArrayList<Cell> warriorPositions;
+    private List<Cell> stonePositions;
+    private List<Cell> warriorPositions;
 
     public EndGame(String grid) {
         // parse grid into useful information
