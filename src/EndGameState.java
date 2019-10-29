@@ -35,45 +35,45 @@ public class EndGameState extends State {
         this.ironManDamage    = ironManDamage;
     }
 
-    public List<Operator> validOperators() {
-        List<Operator> validOperators = new ArrayList<Operator>();
+    public List<String> validOperatorNames() {
+        List<String> validOperatorNames = new ArrayList<String>();
 
         Cell targetCell;
 
         // up
         targetCell = new Cell(ironManPosition.x, ironManPosition.y-1);
         if (targetCell.y >= 0 && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("up"));
+            validOperatorNames.add("up");
         }
         // down
         targetCell = new Cell(ironManPosition.x, ironManPosition.y+1);
         if (targetCell.y < gridHeight && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("down"));
+            validOperatorNames.add("down");
         }
         // right
         targetCell = new Cell(ironManPosition.x+1, ironManPosition.y);
         if (targetCell.x < gridWidth && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("right"));
+            validOperatorNames.add("right");
         }
         // left
         targetCell = new Cell(ironManPosition.x-1, ironManPosition.y);
         if (targetCell.x >= 0 && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("left"));
+            validOperatorNames.add("left");
         }
         // collect
         targetCell = ironManPosition;
         if (stonePositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("collect"));
+            validOperatorNames.add("collect");
         }
         // kill
-        validOperators.add(this.operators.get("kill"));
+        validOperatorNames.add("kill");
         // snap
         if (this.stonePositions.size() == 0 &&
                 this.ironManPosition.equals(this.thanosPosition) &&
                 this.ironManDamage < 100) {
-            validOperators.add(this.operators.get("snap"));
+            validOperatorNames.add("snap");
         }
 
-        return validOperators;
+        return validOperatorNames;
     }
 }
