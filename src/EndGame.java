@@ -63,7 +63,7 @@ public class EndGame extends SearchProblem {
     public static String solve(String grid, String strategy, boolean visualize) {
         EndGame endGameProblem = new EndGame(grid);
 
-        return search(endGameProblem , strategy);
+        return search(endGameProblem, strategy);
     }
 
 	public static void main(String[] args) {
