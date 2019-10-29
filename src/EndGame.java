@@ -19,7 +19,7 @@ public class EndGame extends SearchProblem {
 
     public EndGame(String grid) {
         // parse grid into useful information
-        String[] gridInfo       = grid.split(";");
+        String[] gridInfo = grid.split(";");
 
         String[] gridDimensions = gridInfo[0].split(",");
         this.gridWidth = Integer.parseInt(gridDimensions[0]);
