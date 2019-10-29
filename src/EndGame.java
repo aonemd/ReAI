@@ -24,13 +24,13 @@ public class EndGame extends SearchProblem {
         this.gridWidth = Integer.parseInt(gridDimensions[0]);
         this.gridHeight = Integer.parseInt(gridDimensions[1]);
 
-        String[] ironManPosition = gridInfo[1].split(",");
-        this.ironManPosition = new Cell(Integer.parseInt(ironManPosition[0]),
-                Integer.parseInt(ironManPosition[1]));
+        String[] ironManXYPosition = gridInfo[1].split(",");
+        this.ironManPosition = new Cell(Integer.parseInt(ironManXYPosition[0]),
+                Integer.parseInt(ironManXYPosition[1]));
 
-        String[] thanosPosition = gridInfo[2].split(",");
-        this.thanosPosition = new Cell(Integer.parseInt(thanosPosition[0]),
-                Integer.parseInt(thanosPosition[1]));
+        String[] thanosXYPosition = gridInfo[2].split(",");
+        this.thanosPosition = new Cell(Integer.parseInt(thanosXYPosition[0]),
+                Integer.parseInt(thanosXYPosition[1]));
 
         this.stonePositions = new ArrayList<Cell>();
         String[] stoneXYPositions = gridInfo[3].split(",");
