@@ -1,3 +1,7 @@
 package search;
 
-public abstract class State {}
+import java.util.List;
+
+public interface State {
+    public List<String> validOperatorNames();
+}

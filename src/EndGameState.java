@@ -7,7 +7,7 @@ import java.util.HashMap;
 import search.State;
 import search.Operator;
 
-public class EndGameState extends State {
+public class EndGameState implements State {
     private int gridWidth;
     private int gridHeight;
     private Cell ironManPosition;
