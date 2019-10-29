@@ -1,9 +1,9 @@
 package search;
 
-import java.util.Set;
+import java.util.HashMap;
 
 public abstract class SearchProblem {
-    public Set<Operator> operators;
+    public HashMap<String, Operator> operators;
     public State initialState;
 
     // General Search

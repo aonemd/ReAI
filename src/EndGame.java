@@ -2,8 +2,7 @@ package endgame;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.HashMap;
 
 import search.SearchProblem;
 import search.Operator;
@@ -47,14 +46,14 @@ public class EndGame extends SearchProblem {
                         Integer.parseInt(warriorXYPositions[i+1])));
         }
 
-        Set<Operator> operators = new HashSet<Operator>();
-        operators.add(new Operator("up", 0));
-        operators.add(new Operator("down", 0));
-        operators.add(new Operator("right", 0));
-        operators.add(new Operator("left", 0));
-        operators.add(new Operator("collect", 0));
-        operators.add(new Operator("kill", 0));
-        operators.add(new Operator("snap", 0));
+        HashMap<String, Operator> operators = new HashMap<String, Operator>();
+        operators.put("up", new Operator("up", 0));
+        operators.put("down", new Operator("down", 0));
+        operators.put("right", new Operator("right", 0));
+        operators.put("left", new Operator("left", 0));
+        operators.put("collect", new Operator("collect", 0));
+        operators.put("kill", new Operator("kill", 0));
+        operators.put("snap", new Operator("snap", 0));
 
         this.operators = operators;
         this.initialState = new EndGameState();
