@@ -56,7 +56,14 @@ public class EndGame extends SearchProblem {
         operators.put("snap", new Operator("snap", 0));
 
         this.operators = operators;
-        this.initialState = new EndGameState();
+        this.initialState = new EndGameState(gridWidth,
+                                            gridHeight,
+                                            ironManPosition,
+                                            thanosPosition,
+                                            warriorPositions,
+                                            stonePositions,
+                                            operators,
+                                            0);
     }
 
     public static String solve(String grid, String strategy, boolean visualize) {
