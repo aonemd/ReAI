@@ -18,6 +18,7 @@ public class EndGameState implements State {
     private List<Cell> warriorPositions;
     private HashMap<String, Operator> operators;
     private int ironManDamage;
+    private boolean snapped;
 
     public EndGameState(int gridWidth,
                         int gridHeight,
@@ -26,7 +27,8 @@ public class EndGameState implements State {
                         List<Cell> stonePositions,
                         List<Cell> warriorPositions,
                         HashMap<String, Operator> operators,
-                        int ironManDamage) {
+                        int ironManDamage,
+                        boolean snapped) {
         this.gridWidth        = gridWidth;
         this.gridHeight       = gridHeight;
         this.ironManPosition  = ironManPosition;
@@ -35,6 +37,7 @@ public class EndGameState implements State {
         this.warriorPositions = warriorPositions;
         this.operators        = operators;
         this.ironManDamage    = ironManDamage;
+        this.snapped          = snapped;
     }
 
     public List<Operator> validOperators() {
@@ -97,7 +100,8 @@ public class EndGameState implements State {
                                 clonedStonePositions,
                                 clonedWarriorPositions,
                                 this.operators,
-                                this.ironManDamage);
+                                this.ironManDamage,
+                                this.snapped);
     }
 
     public EndGameState applyOperator(String operatorName) {
@@ -117,6 +121,10 @@ public class EndGameState implements State {
         }
 
         return this;
+    }
+
+    public boolean isGoal() {
+        return this.snapped;
     }
 
     private EndGameState up() {
@@ -169,6 +177,8 @@ public class EndGameState implements State {
     }
 
     private EndGameState snap() {
+        this.snapped = true;
+
         return this;
     }
 }

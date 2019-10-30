@@ -63,7 +63,8 @@ public class EndGame extends SearchProblem {
                                             warriorPositions,
                                             stonePositions,
                                             operators,
-                                            0);
+                                            0,
+                                            false);
     }
 
     public static String solve(String grid, String strategy, boolean visualize) {
