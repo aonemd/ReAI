@@ -118,4 +118,57 @@ public class EndGameState implements State {
 
         return this;
     }
+
+    private EndGameState up() {
+        this.ironManPosition.incrementYBy(-1);
+
+        return this;
+    }
+
+    private EndGameState down() {
+        this.ironManPosition.incrementYBy(1);
+
+        return this;
+    }
+
+    private EndGameState right() {
+        this.ironManPosition.incrementXBy(1);
+
+        return this;
+    }
+
+    private EndGameState left() {
+        this.ironManPosition.incrementXBy(-1);
+
+        return this;
+    }
+
+    private EndGameState collect() {
+        this.stonePositions.remove(this.ironManPosition);
+        this.ironManDamage += 3;
+
+        return this;
+    }
+
+    private EndGameState kill() {
+        Cell[] adjacentCells = new Cell[] {
+            this.ironManPosition.clone().incrementYBy(-1),
+            this.ironManPosition.clone().incrementYBy(1),
+            this.ironManPosition.clone().incrementXBy(1),
+            this.ironManPosition.clone().incrementXBy(-1)
+        };
+
+        for (Cell adjacentCell : adjacentCells) {
+            if (this.warriorPositions.contains(adjacentCell)) {
+                this.warriorPositions.remove(adjacentCell);
+                this.ironManDamage += 2;
+            }
+        }
+
+        return this;
+    }
+
+    private EndGameState snap() {
+        return this;
+    }
 }

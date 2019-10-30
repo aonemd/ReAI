@@ -8,6 +8,18 @@ public class Cell {
         this.y = y;
     }
 
+    public Cell incrementXBy(int increment) {
+        this.x += increment;
+
+        return this;
+    }
+
+    public Cell incrementYBy(int increment) {
+        this.y += increment;
+
+        return this;
+    }
+
     public Cell clone() {
         return new Cell(this.x, this.y);
     }
