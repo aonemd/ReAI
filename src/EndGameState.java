@@ -3,6 +3,8 @@ package endgame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import search.State;
 import search.Operator;
@@ -96,5 +98,24 @@ public class EndGameState implements State {
                                 clonedWarriorPositions,
                                 this.operators,
                                 this.ironManDamage);
+    }
+
+    public EndGameState applyOperator(String operatorName) {
+        Method method;
+
+        try {
+            method = this.getClass().getDeclaredMethod(operatorName);
+            method.setAccessible(true);
+
+            return (EndGameState) method.invoke(this);
+        } catch (SecurityException
+                | NoSuchMethodException
+                | IllegalArgumentException
+                | IllegalAccessException
+                | InvocationTargetException e) {
+            System.out.println("Error:" + e);
+        }
+
+        return this;
     }
 }
