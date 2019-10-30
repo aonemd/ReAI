@@ -8,6 +8,10 @@ public class Cell {
         this.y = y;
     }
 
+    public Cell clone() {
+        return new Cell(this.x, this.y);
+    }
+
     public boolean equals(Object other) {
         if (this == other) {
             return true;

@@ -76,4 +76,25 @@ public class EndGameState implements State {
 
         return validOperatorNames;
     }
+
+    public EndGameState clone() {
+        List<Cell> clonedStonePositions = new ArrayList<Cell>();
+        for (Cell stoneCell : this.stonePositions) {
+            clonedStonePositions.add(stoneCell.clone());
+        }
+
+        List<Cell> clonedWarriorPositions = new ArrayList<Cell>();
+        for (Cell warriorCell : this.warriorPositions) {
+            clonedWarriorPositions.add(warriorCell.clone());
+        }
+
+        return new EndGameState(this.gridWidth,
+                                this.gridHeight,
+                                this.ironManPosition.clone(),
+                                this.thanosPosition.clone(),
+                                clonedStonePositions,
+                                clonedWarriorPositions,
+                                this.operators,
+                                this.ironManDamage);
+    }
 }
