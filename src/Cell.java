@@ -1,6 +1,6 @@
 package endgame;
 
-public class Cell {
+public class Cell implements Comparable {
     public int x, y;
 
     public Cell(int x, int y) {
@@ -24,6 +24,10 @@ public class Cell {
         return new Cell(this.x, this.y);
     }
 
+    public String toString() {
+        return this.x + "," + this.y;
+    }
+
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -35,5 +39,19 @@ public class Cell {
 
         Cell otherCell = (Cell) other;
         return this.x == otherCell.x && this.y == otherCell.y;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        if (this == other) {
+            return 0;
+        }
+
+        Cell otherCell = (Cell) other;
+        if (this.x == otherCell.x) {
+            return new Integer (this.y).compareTo(otherCell.y);
+        }
+
+        return new Integer (this.x).compareTo(otherCell.x);
     }
 }

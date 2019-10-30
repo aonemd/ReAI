@@ -3,6 +3,9 @@ package endgame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.Comparator;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
@@ -125,6 +128,38 @@ public class EndGameState implements State {
 
     public boolean isGoal() {
         return this.snapped;
+    }
+
+    // returns a string from state variable parameters to use as a unique
+    // identifier for comparisons
+    public String toHashKey() {
+        this.stonePositions.sort(Comparator.naturalOrder());
+        this.warriorPositions.sort(Comparator.naturalOrder());
+
+        String hashedStoneCells = String.join(",", this.stonePositions.stream().map(Cell::toString).collect(Collectors.toList()));
+        String hashedwarriorCells = String.join(",", this.warriorPositions.stream().map(Cell::toString).collect(Collectors.toList()));
+
+        return this.ironManPosition.toString()
+            + hashedStoneCells
+            + hashedwarriorCells
+            + this.ironManDamage;
+    }
+
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (this.getClass() != other.getClass()) {
+            return false;
+        }
+
+        EndGameState otherState = (EndGameState) other;
+        return (this.ironManPosition.equals(otherState.ironManPosition)
+                && this.stonePositions.equals(otherState.stonePositions)
+                && this.warriorPositions.equals(otherState.warriorPositions)
+                && this.ironManDamage == otherState.ironManDamage
+               );
     }
 
     private EndGameState up() {
