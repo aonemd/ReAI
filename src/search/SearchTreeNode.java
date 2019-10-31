@@ -30,4 +30,16 @@ public class SearchTreeNode {
 
         return expandedNodes;
     }
+
+    public String toPlan() {
+        List<String> planOperators = new ArrayList<String>();
+        SearchTreeNode current = this;
+        while (current.parent != null) {
+            planOperators.add(current.operator.name);
+
+            current = current.parent;
+        }
+
+        return String.join(",", planOperators);
+    }
 }
