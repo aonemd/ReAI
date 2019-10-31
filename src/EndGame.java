@@ -33,17 +33,21 @@ public class EndGame extends SearchProblem {
                 Integer.parseInt(thanosXYPosition[1]));
 
         this.stonePositions = new ArrayList<Cell>();
-        String[] stoneXYPositions = gridInfo[3].split(",");
-        for(int i = 0; i < stoneXYPositions.length; i += 2) {
-            this.stonePositions.add(new Cell(Integer.parseInt(stoneXYPositions[i]),
-                        Integer.parseInt(stoneXYPositions[i+1])));
+        if (gridInfo.length > 3) {
+            String[] stoneXYPositions = gridInfo[3].split(",");
+            for(int i = 0; i < stoneXYPositions.length; i += 2) {
+                this.stonePositions.add(new Cell(Integer.parseInt(stoneXYPositions[i]),
+                            Integer.parseInt(stoneXYPositions[i+1])));
+            }
         }
 
         this.warriorPositions = new ArrayList<Cell>();
-        String[] warriorXYPositions = gridInfo[4].split(",");
-        for(int i = 0; i < warriorXYPositions.length; i += 2) {
-            this.warriorPositions.add(new Cell(Integer.parseInt(warriorXYPositions[i]),
-                        Integer.parseInt(warriorXYPositions[i+1])));
+        if (gridInfo.length > 4) {
+            String[] warriorXYPositions = gridInfo[4].split(",");
+            for(int i = 0; i < warriorXYPositions.length; i += 2) {
+                this.warriorPositions.add(new Cell(Integer.parseInt(warriorXYPositions[i]),
+                            Integer.parseInt(warriorXYPositions[i+1])));
+            }
         }
 
         HashMap<String, Operator> operators = new HashMap<String, Operator>();
