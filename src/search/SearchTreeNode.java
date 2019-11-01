@@ -2,6 +2,7 @@ package search;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchTreeNode {
     public State state;
@@ -39,6 +40,8 @@ public class SearchTreeNode {
 
             current = current.parent;
         }
+
+        Collections.reverse(planOperators);
 
         return String.join(",", planOperators);
     }
