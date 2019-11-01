@@ -78,6 +78,8 @@ public class EndGame extends SearchProblem {
     }
 
 	public static void main(String[] args) {
-        System.out.println("Hello, world!");
+        String solution = EndGame.solve("2,2;0,0;0,1", "BF", false);
+
+        System.out.println(solution);
     }
 }
