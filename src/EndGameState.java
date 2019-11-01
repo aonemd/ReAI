@@ -50,22 +50,22 @@ public class EndGameState implements State {
 
         // up
         targetCell = new Cell(ironManPosition.x, ironManPosition.y-1);
-        if (targetCell.y >= 0 && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
+        if (targetCell.y >= 0 && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("up"));
         }
         // down
         targetCell = new Cell(ironManPosition.x, ironManPosition.y+1);
-        if (targetCell.y < gridHeight && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
+        if (targetCell.y < gridHeight && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("down"));
         }
         // right
         targetCell = new Cell(ironManPosition.x+1, ironManPosition.y);
-        if (targetCell.x < gridWidth && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
+        if (targetCell.x < gridWidth && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("right"));
         }
         // left
         targetCell = new Cell(ironManPosition.x-1, ironManPosition.y);
-        if (targetCell.x >= 0 && !thanosPosition.equals(targetCell) && !warriorPositions.contains(targetCell)) {
+        if (targetCell.x >= 0 && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("left"));
         }
         // collect
@@ -215,6 +215,12 @@ public class EndGameState implements State {
         this.snapped = true;
 
         return this;
+    }
+
+    private boolean canIronManEnterCell(Cell targetCell) {
+        return (!this.warriorPositions.equals(targetCell)
+                && (!this.thanosPosition.equals(targetCell)
+                    || (this.thanosPosition.equals(targetCell) && this.stonePositions.size() == 0)));
     }
 
     private List<Cell> adjacentCells(Cell centerCell) {
