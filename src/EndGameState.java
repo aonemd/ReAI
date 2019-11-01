@@ -74,7 +74,11 @@ public class EndGameState implements State {
             validOperators.add(this.operators.get("collect"));
         }
         // kill
-        validOperators.add(this.operators.get("kill"));
+        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        // kill if the two lists have elements in common
+        if (!Collections.disjoint(this.warriorPositions, adjacentCells)) {
+            validOperators.add(this.operators.get("kill"));
+        }
         // snap
         if (this.stonePositions.size() == 0 &&
                 this.ironManPosition.equals(this.thanosPosition) &&
@@ -195,12 +199,7 @@ public class EndGameState implements State {
     }
 
     private EndGameState kill() {
-        Cell[] adjacentCells = new Cell[] {
-            this.ironManPosition.clone().incrementYBy(-1),
-            this.ironManPosition.clone().incrementYBy(1),
-            this.ironManPosition.clone().incrementXBy(1),
-            this.ironManPosition.clone().incrementXBy(-1)
-        };
+        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
 
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
@@ -216,5 +215,15 @@ public class EndGameState implements State {
         this.snapped = true;
 
         return this;
+    }
+
+    private List<Cell> adjacentCells(Cell centerCell) {
+        List<Cell> cells = new ArrayList<Cell>();
+        cells.add(centerCell.clone().incrementYBy(-1));
+        cells.add(centerCell.clone().incrementYBy(1));
+        cells.add(centerCell.clone().incrementXBy(1));
+        cells.add(centerCell.clone().incrementXBy(-1));
+
+        return cells;
     }
 }
