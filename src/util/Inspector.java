@@ -11,7 +11,7 @@ public class Inspector {
                 String name = field.getName();
                 Object value = field.get(obj);
 
-                System.out.printf("%s: %s%n", name, value);
+                System.out.printf("%s: %s%n", name, value.toString());
             } catch (IllegalAccessException e) {
                 System.out.println("Inspection Error: " + e);
             }

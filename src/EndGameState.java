@@ -130,9 +130,7 @@ public class EndGameState implements State {
         return this.snapped;
     }
 
-    // returns a string from state variable parameters to use as a unique
-    // identifier for comparisons
-    public String toHashKey() {
+    public String toString() {
         this.stonePositions.sort(Comparator.naturalOrder());
         this.warriorPositions.sort(Comparator.naturalOrder());
 
@@ -140,8 +138,11 @@ public class EndGameState implements State {
         String hashedwarriorCells = String.join(",", this.warriorPositions.stream().map(Cell::toString).collect(Collectors.toList()));
 
         return this.ironManPosition.toString()
+            + ";"
             + hashedStoneCells
+            + ";"
             + hashedwarriorCells
+            + ";"
             + this.ironManDamage;
     }
 
