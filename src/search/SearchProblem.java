@@ -12,6 +12,7 @@ public abstract class SearchProblem {
 
     public static String search(SearchProblem searchProblem, String strategy) {
         List<SearchTreeNode> nodeList = new SearchTreeNode(searchProblem.initialState, null, null, 0, 0).expand();
+        int expandedNodeCount = 1;
 
         List<State> visitedStates = new ArrayList<State>();
 
@@ -21,13 +22,14 @@ public abstract class SearchProblem {
             currentNode = nodeList.remove(0);
 
             if (currentNode.state.isGoal()) {
-                return currentNode.toPlan();
+                return currentNode.toPlan() + ";" + expandedNodeCount;
             } else {
                 if (visitedStates.contains(currentNode.state)) {
                     continue;
                 }
 
                 List<SearchTreeNode> _expandedNodes = currentNode.expand();
+                expandedNodeCount += 1;
                 switch (strategy) {
                     case "BF":
                         nodeList.addAll(_expandedNodes);

@@ -8,14 +8,14 @@ public class EndGameTest {
     public void testFinalCell() {
         String solution = EndGame.solve("2,2;0,0;0,0", "BF", false);
 
-        assertEquals("snap", solution);
+        assertEquals("snap;1", solution);
     }
 
     @Test
     public void testOneCellBeforeFinal() {
         String solution = EndGame.solve("2,2;0,0;0,1", "BF", false);
 
-        assertEquals("down,snap", solution);
+        assertEquals("down,snap;3", solution);
     }
 
     @Test
