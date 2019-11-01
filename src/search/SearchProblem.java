@@ -27,7 +27,16 @@ public abstract class SearchProblem {
                     continue;
                 }
 
-                nodeList.addAll(currentNode.expand());
+                List<SearchTreeNode> _expandedNodes = currentNode.expand();
+                switch (strategy) {
+                    case "BF":
+                        nodeList.addAll(_expandedNodes);
+                        break;
+                    case "DF":
+                        _expandedNodes.addAll(nodeList);
+                        nodeList = _expandedNodes;
+                        break;
+                }
             }
 
             visitedStates.add(currentNode.state);
