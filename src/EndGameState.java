@@ -48,6 +48,23 @@ public class EndGameState implements State {
 
         Cell targetCell;
 
+        // snap
+        if (this.stonePositions.size() == 0 &&
+                this.ironManPosition.equals(this.thanosPosition) &&
+                this.ironManDamage < 100) {
+            validOperators.add(this.operators.get("snap"));
+        }
+        // collect
+        targetCell = ironManPosition;
+        if (stonePositions.contains(targetCell)) {
+            validOperators.add(this.operators.get("collect"));
+        }
+        // kill
+        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        // kill if the two lists have elements in common
+        if (!Collections.disjoint(this.warriorPositions, adjacentCells)) {
+            validOperators.add(this.operators.get("kill"));
+        }
         // up
         targetCell = new Cell(ironManPosition.x, ironManPosition.y-1);
         if (targetCell.y >= 0 && canIronManEnterCell(targetCell)) {
@@ -67,23 +84,6 @@ public class EndGameState implements State {
         targetCell = new Cell(ironManPosition.x-1, ironManPosition.y);
         if (targetCell.x >= 0 && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("left"));
-        }
-        // collect
-        targetCell = ironManPosition;
-        if (stonePositions.contains(targetCell)) {
-            validOperators.add(this.operators.get("collect"));
-        }
-        // kill
-        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
-        // kill if the two lists have elements in common
-        if (!Collections.disjoint(this.warriorPositions, adjacentCells)) {
-            validOperators.add(this.operators.get("kill"));
-        }
-        // snap
-        if (this.stonePositions.size() == 0 &&
-                this.ironManPosition.equals(this.thanosPosition) &&
-                this.ironManDamage < 100) {
-            validOperators.add(this.operators.get("snap"));
         }
 
         return validOperators;
@@ -167,26 +167,8 @@ public class EndGameState implements State {
                );
     }
 
-    private EndGameState up() {
-        this.ironManPosition.incrementYBy(-1);
-
-        return this;
-    }
-
-    private EndGameState down() {
-        this.ironManPosition.incrementYBy(1);
-
-        return this;
-    }
-
-    private EndGameState right() {
-        this.ironManPosition.incrementXBy(1);
-
-        return this;
-    }
-
-    private EndGameState left() {
-        this.ironManPosition.incrementXBy(-1);
+    private EndGameState snap() {
+        this.snapped = true;
 
         return this;
     }
@@ -211,8 +193,26 @@ public class EndGameState implements State {
         return this;
     }
 
-    private EndGameState snap() {
-        this.snapped = true;
+    private EndGameState up() {
+        this.ironManPosition.incrementYBy(-1);
+
+        return this;
+    }
+
+    private EndGameState down() {
+        this.ironManPosition.incrementYBy(1);
+
+        return this;
+    }
+
+    private EndGameState right() {
+        this.ironManPosition.incrementXBy(1);
+
+        return this;
+    }
+
+    private EndGameState left() {
+        this.ironManPosition.incrementXBy(-1);
 
         return this;
     }

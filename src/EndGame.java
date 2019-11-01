@@ -51,13 +51,13 @@ public class EndGame extends SearchProblem {
         }
 
         HashMap<String, Operator> operators = new HashMap<String, Operator>();
+        operators.put("snap", new Operator("snap", 0));
+        operators.put("collect", new Operator("collect", 0));
+        operators.put("kill", new Operator("kill", 0));
         operators.put("up", new Operator("up", 0));
         operators.put("down", new Operator("down", 0));
         operators.put("right", new Operator("right", 0));
         operators.put("left", new Operator("left", 0));
-        operators.put("collect", new Operator("collect", 0));
-        operators.put("kill", new Operator("kill", 0));
-        operators.put("snap", new Operator("snap", 0));
 
         this.operators = operators;
         this.initialState = new EndGameState(gridWidth,
