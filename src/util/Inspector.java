@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 
 public class Inspector {
     public static void inspect(Object obj) {
+        System.out.printf("%s%n", obj);
+
         for (Field field : obj.getClass().getDeclaredFields()) {
             field.setAccessible(true);
 
