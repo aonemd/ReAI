@@ -62,28 +62,28 @@ public class EndGameState implements State {
         }
         // kill
         HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
-        // kill if the two lists have elements in common
-        if (new HashSet(this.warriorPositions).removeAll(adjacentCells)) {
+        // kill if the two sets intersect
+        if (new HashSet<Cell>(this.warriorPositions).removeAll(adjacentCells)) {
             validOperators.add(this.operators.get("kill"));
         }
         // up
-        targetCell = new Cell(ironManPosition.x, ironManPosition.y-1);
-        if (targetCell.y >= 0 && canIronManEnterCell(targetCell)) {
+        targetCell = this.ironManPosition.clone().incrementXBy(-1);
+        if (targetCell.x >= 0 && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("up"));
         }
         // down
-        targetCell = new Cell(ironManPosition.x, ironManPosition.y+1);
-        if (targetCell.y < gridHeight && canIronManEnterCell(targetCell)) {
+        targetCell = this.ironManPosition.clone().incrementXBy(1);
+        if (targetCell.x < gridHeight && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("down"));
         }
         // right
-        targetCell = new Cell(ironManPosition.x+1, ironManPosition.y);
-        if (targetCell.x < gridWidth && canIronManEnterCell(targetCell)) {
+        targetCell = this.ironManPosition.clone().incrementYBy(1);
+        if (targetCell.y < gridWidth && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("right"));
         }
         // left
-        targetCell = new Cell(ironManPosition.x-1, ironManPosition.y);
-        if (targetCell.x >= 0 && canIronManEnterCell(targetCell)) {
+        targetCell = this.ironManPosition.clone().incrementYBy(-1);
+        if (targetCell.y >= 0 && canIronManEnterCell(targetCell)) {
             validOperators.add(this.operators.get("left"));
         }
 
@@ -196,25 +196,25 @@ public class EndGameState implements State {
     }
 
     private EndGameState up() {
-        this.ironManPosition.incrementYBy(-1);
+        this.ironManPosition.incrementXBy(-1);
 
         return this;
     }
 
     private EndGameState down() {
-        this.ironManPosition.incrementYBy(1);
-
-        return this;
-    }
-
-    private EndGameState right() {
         this.ironManPosition.incrementXBy(1);
 
         return this;
     }
 
+    private EndGameState right() {
+        this.ironManPosition.incrementYBy(1);
+
+        return this;
+    }
+
     private EndGameState left() {
-        this.ironManPosition.incrementXBy(-1);
+        this.ironManPosition.incrementYBy(-1);
 
         return this;
     }
@@ -246,10 +246,10 @@ public class EndGameState implements State {
 
     private HashSet<Cell> adjacentCells(Cell centerCell) {
         HashSet<Cell> cells = new HashSet<Cell>();
-        cells.add(centerCell.clone().incrementYBy(-1));
-        cells.add(centerCell.clone().incrementYBy(1));
-        cells.add(centerCell.clone().incrementXBy(1));
         cells.add(centerCell.clone().incrementXBy(-1));
+        cells.add(centerCell.clone().incrementXBy(1));
+        cells.add(centerCell.clone().incrementYBy(1));
+        cells.add(centerCell.clone().incrementYBy(-1));
 
         return cells;
     }
