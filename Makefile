@@ -21,4 +21,7 @@ test:	clean build
 	find $(TST_DIR) -name "*.java" | xargs javac -g -d bin/test/ -cp $(SRC_BIN_DIR):$(TST_LIB)
 	java -cp $(SRC_BIN_DIR):$(TST_BIN_DIR):$(TST_LIB) org.junit.runner.JUnitCore $(TST_CLS)
 
+debug:	clean build
+	jdb -launch -classpath $(SRC_BIN_DIR) $(SRC_CLS)
+
 .PHONY: clean build run test
