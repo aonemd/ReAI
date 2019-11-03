@@ -64,8 +64,8 @@ public class EndGame extends SearchProblem {
                                             gridHeight,
                                             ironManPosition,
                                             thanosPosition,
-                                            warriorPositions,
                                             stonePositions,
+                                            warriorPositions,
                                             operators,
                                             0,
                                             false);
