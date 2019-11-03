@@ -15,11 +15,18 @@ public class EndGameTest {
     public void testOneCellBeforeFinal() {
         String solution = EndGame.solve("2,2;0,0;0,1", "BF", false);
 
-        assertEquals("down,snap;3", solution);
+        assertEquals("right,snap;5", solution);
     }
 
     @Test
-    public void testHelloWorld() {
+    public void testSimpleTestCase() {
+        String solution = EndGame.solve("2,2;0,0;1,0;1,1;0,1", "BF", false);
+
+        assertEquals("kill,right,down,collect,left,snap;13", solution);
+    }
+
+    @Test
+    public void testGivenExample() {
 
         String solution = EndGame.solve("5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3",
                 "BF",
