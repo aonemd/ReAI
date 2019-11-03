@@ -3,6 +3,7 @@ package endgame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.Comparator;
@@ -60,9 +61,9 @@ public class EndGameState implements State {
             validOperators.add(this.operators.get("collect"));
         }
         // kill
-        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
         // kill if the two lists have elements in common
-        if (!Collections.disjoint(this.warriorPositions, adjacentCells)) {
+        if (new HashSet(this.warriorPositions).removeAll(adjacentCells)) {
             validOperators.add(this.operators.get("kill"));
         }
         // up
@@ -178,7 +179,7 @@ public class EndGameState implements State {
     }
 
     private EndGameState kill() {
-        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
 
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
@@ -221,7 +222,7 @@ public class EndGameState implements State {
     }
 
     private boolean isAdjacentToThanos() {
-        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
 
         return adjacentCells.contains(this.thanosPosition);
     }
@@ -229,7 +230,7 @@ public class EndGameState implements State {
     private int getAdjacentWarriorCount() {
         int adjacentWarriorCount = 0;
 
-        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
                 adjacentWarriorCount++;
@@ -239,8 +240,8 @@ public class EndGameState implements State {
         return adjacentWarriorCount;
     }
 
-    private List<Cell> adjacentCells(Cell centerCell) {
-        List<Cell> cells = new ArrayList<Cell>();
+    private HashSet<Cell> adjacentCells(Cell centerCell) {
+        HashSet<Cell> cells = new HashSet<Cell>();
         cells.add(centerCell.clone().incrementYBy(-1));
         cells.add(centerCell.clone().incrementYBy(1));
         cells.add(centerCell.clone().incrementXBy(1));
