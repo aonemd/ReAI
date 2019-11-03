@@ -47,6 +47,21 @@ public class SearchTreeNode implements Comparable {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (this.getClass() != other.getClass()) {
+            return false;
+        }
+
+        SearchTreeNode otherNode = (SearchTreeNode) other;
+        return (this.state.equals(otherNode.state)
+                && this.pathCost == otherNode.pathCost);
+    }
+
+    @Override
     public int compareTo(Object other) {
         if (this == other) {
             return 0;
