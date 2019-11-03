@@ -112,6 +112,10 @@ public class EndGameState implements State {
         return this.snapped;
     }
 
+    public int getCost() {
+        return this.ironManDamage;
+    }
+
     public String toString() {
         this.stonePositions.sort(Comparator.naturalOrder());
         this.warriorPositions.sort(Comparator.naturalOrder());
