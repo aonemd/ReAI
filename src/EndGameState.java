@@ -220,7 +220,7 @@ public class EndGameState implements State {
     }
 
     private boolean canIronManEnterCell(Cell targetCell) {
-        return (!this.warriorPositions.equals(targetCell)
+        return (!this.warriorPositions.contains(targetCell)
                 && (!this.thanosPosition.equals(targetCell)
                     || (this.thanosPosition.equals(targetCell) && this.stonePositions.size() == 0)));
     }
