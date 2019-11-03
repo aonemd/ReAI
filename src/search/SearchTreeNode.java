@@ -10,6 +10,7 @@ public class SearchTreeNode implements Comparable {
     public Operator operator;
     public int depth;
     public int pathCost;
+    private double evaluation;
 
     public SearchTreeNode(State state, SearchTreeNode parent, Operator operator,
             int depth, int pathCost) {
@@ -18,6 +19,7 @@ public class SearchTreeNode implements Comparable {
         this.operator = operator;
         this.depth = depth;
         this.pathCost = pathCost;
+        this.evaluation = 0;
     }
 
     public List<SearchTreeNode> expand() {
@@ -30,6 +32,10 @@ public class SearchTreeNode implements Comparable {
         }
 
         return expandedNodes;
+    }
+
+    public void setEvaluation(double evaluation) {
+        this.evaluation = evaluation;
     }
 
     public String toPlan() {
@@ -69,6 +75,6 @@ public class SearchTreeNode implements Comparable {
 
         SearchTreeNode otherNode = (SearchTreeNode) other;
 
-        return new Integer(this.pathCost).compareTo(otherNode.pathCost);
+        return new Double(this.evaluation).compareTo(otherNode.evaluation);
     }
 }

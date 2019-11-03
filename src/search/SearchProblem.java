@@ -36,6 +36,7 @@ public abstract class SearchProblem {
                 }
 
                 List<SearchTreeNode> _expandedNodes = currentNode.expand();
+
                 expandedNodeCount += 1;
                 switch (strategy) {
                     case "BF":
@@ -46,6 +47,20 @@ public abstract class SearchProblem {
                         nodeList = _expandedNodes;
                         break;
                     case "UC":
+                        _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost));
+
+                        nodeList.addAll(_expandedNodes);
+                        Collections.sort(nodeList);
+                        break;
+                    case "GRi":
+                        _expandedNodes.forEach((node) -> node.setEvaluation(node.state.hfI()));
+
+                        nodeList.addAll(_expandedNodes);
+                        Collections.sort(nodeList);
+                        break;
+                    case "ASi":
+                        _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost + node.state.hfI()));
+
                         nodeList.addAll(_expandedNodes);
                         Collections.sort(nodeList);
                         break;

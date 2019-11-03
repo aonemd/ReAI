@@ -113,6 +113,11 @@ public class EndGameState implements State {
         return this.ironManDamage;
     }
 
+    public double hfI() {
+        return (Math.abs(this.thanosPosition.x - this.ironManPosition.x)
+                + Math.abs(this.thanosPosition.y - this.ironManPosition.y));
+    }
+
     public String toString() {
         String hashedStoneCells = String.join(",", this.stonePositions.stream().map(Cell::toString).collect(Collectors.toList()));
         String hashedwarriorCells = String.join(",", this.warriorPositions.stream().map(Cell::toString).collect(Collectors.toList()));
