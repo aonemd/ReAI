@@ -93,11 +93,11 @@ public class EndGameState implements State {
     public EndGameState applyOperator(String operatorName) {
         EndGameState invokedState = (EndGameState) invoke(this, operatorName);
 
-        if (isAdjacentToThanos()) {
+        if (invokedState.isAdjacentToThanos()) {
             invokedState.ironManDamage += 5;
         }
 
-        invokedState.ironManDamage += getAdjacentWarriorCount() * 1;
+        invokedState.ironManDamage += invokedState.getAdjacentWarriorCount() * 1;
 
         return invokedState;
     }
