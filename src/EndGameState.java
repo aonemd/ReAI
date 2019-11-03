@@ -106,6 +106,10 @@ public class EndGameState implements State {
         return this.snapped;
     }
 
+    public boolean isDead() {
+        return (this.getCost() >= 100);
+    }
+
     public int getCost() {
         return this.ironManDamage;
     }
