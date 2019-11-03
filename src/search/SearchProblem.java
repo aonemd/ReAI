@@ -44,6 +44,7 @@ public abstract class SearchProblem {
                     case "DF":
                         _expandedNodes.addAll(nodeList);
                         nodeList = _expandedNodes;
+                        break;
                     case "UC":
                         nodeList.addAll(_expandedNodes);
                         Collections.sort(nodeList);
