@@ -179,7 +179,7 @@ public class EndGameState implements State {
 
     private EndGameState collect() {
         this.stonePositions.remove(this.ironManPosition);
-        this.ironManDamage += 3;
+        this.ironManDamage += this.operators.get("kill").cost;
 
         return this;
     }
@@ -190,7 +190,7 @@ public class EndGameState implements State {
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
                 this.warriorPositions.remove(adjacentCell);
-                this.ironManDamage += 2;
+                this.ironManDamage += this.operators.get("kill").cost;
             }
         }
 

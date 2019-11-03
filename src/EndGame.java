@@ -52,8 +52,8 @@ public class EndGame extends SearchProblem {
 
         HashMap<String, Operator> operators = new HashMap<String, Operator>();
         operators.put("snap", new Operator("snap", 0));
-        operators.put("collect", new Operator("collect", 0));
-        operators.put("kill", new Operator("kill", 0));
+        operators.put("collect", new Operator("collect", 3));
+        operators.put("kill", new Operator("kill", 2));
         operators.put("up", new Operator("up", 0));
         operators.put("down", new Operator("down", 0));
         operators.put("right", new Operator("right", 0));
