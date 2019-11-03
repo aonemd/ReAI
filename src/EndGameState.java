@@ -92,6 +92,12 @@ public class EndGameState implements State {
     public EndGameState applyOperator(String operatorName) {
         EndGameState invokedState = (EndGameState) invoke(this, operatorName);
 
+        if (isAdjacentToThanos()) {
+            invokedState.ironManDamage += 5;
+        }
+
+        invokedState.ironManDamage += getAdjacentWarriorCount() * 1;
+
         return invokedState;
     }
 
@@ -212,6 +218,25 @@ public class EndGameState implements State {
         return (!this.warriorPositions.equals(targetCell)
                 && (!this.thanosPosition.equals(targetCell)
                     || (this.thanosPosition.equals(targetCell) && this.stonePositions.size() == 0)));
+    }
+
+    private boolean isAdjacentToThanos() {
+        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+
+        return adjacentCells.contains(this.thanosPosition);
+    }
+
+    private int getAdjacentWarriorCount() {
+        int adjacentWarriorCount = 0;
+
+        List<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        for (Cell adjacentCell : adjacentCells) {
+            if (this.warriorPositions.contains(adjacentCell)) {
+                adjacentWarriorCount++;
+            }
+        }
+
+        return adjacentWarriorCount;
     }
 
     private List<Cell> adjacentCells(Cell centerCell) {
