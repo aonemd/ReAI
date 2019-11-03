@@ -29,7 +29,7 @@ public abstract class SearchProblem {
             currentNode = nodeList.remove(0);
 
             if (currentNode.state.isGoal()) {
-                return currentNode.toPlan() + ";" + expandedNodeCount;
+                return currentNode.toPlan() + ";" + currentNode.getEvaluation() +  ";" + expandedNodeCount;
             } else if (!currentNode.state.isDead()) {
                 if (visitedStates.contains(currentNode.state)) {
                     continue;

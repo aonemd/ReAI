@@ -34,6 +34,10 @@ public class SearchTreeNode implements Comparable {
         return expandedNodes;
     }
 
+    public Double getEvaluation() {
+        return this.evaluation;
+    }
+
     public void setEvaluation(double evaluation) {
         this.evaluation = evaluation;
     }
