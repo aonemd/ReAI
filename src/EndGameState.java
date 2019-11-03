@@ -148,6 +148,7 @@ public class EndGameState implements State {
                                 this.snapped);
     }
 
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
@@ -161,8 +162,20 @@ public class EndGameState implements State {
         return (this.ironManPosition.equals(otherState.ironManPosition)
                 && this.stonePositions.equals(otherState.stonePositions)
                 && this.warriorPositions.equals(otherState.warriorPositions)
-                && this.ironManDamage == otherState.ironManDamage
-               );
+                && this.getCost() == otherState.getCost());
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+
+        result = prime * result + ((this.ironManPosition == null) ? 0 : this.ironManPosition.hashCode());
+        result = prime * result + ((this.stonePositions == null || this.stonePositions.size() == 0) ? 0 : this.stonePositions.hashCode());
+        result = prime * result + ((this.warriorPositions == null || this.warriorPositions.size() == 0) ? 0 : this.warriorPositions.hashCode());
+        result = prime * result + ((this.getCost() == 0) ? 0 : this.getCost());
+
+        return result;
     }
 
     private EndGameState snap() {

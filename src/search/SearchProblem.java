@@ -1,7 +1,8 @@
 package search;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public abstract class SearchProblem {
             .expand();
         int expandedNodeCount = 1;
 
-        List<State> visitedStates = new ArrayList<State>();
+        Set<State> visitedStates = new HashSet<State>();
 
         SearchTreeNode currentNode = null;
         Iterator<SearchTreeNode> nodeListIterator = nodeList.iterator();

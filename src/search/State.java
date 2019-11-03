@@ -9,6 +9,7 @@ public interface State {
     public boolean isDead();
     public int getCost();
     public State clone();
-    public boolean equals(Object other);
     public String toString();
+    public boolean equals(Object other);
+    public int hashCode();
 }
