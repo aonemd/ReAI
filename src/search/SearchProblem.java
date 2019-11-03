@@ -46,6 +46,11 @@ public abstract class SearchProblem {
                         _expandedNodes.addAll(nodeList);
                         nodeList = _expandedNodes;
                         break;
+                    case "ID":
+                        // TODO: Implement Me
+                        _expandedNodes.addAll(nodeList);
+                        nodeList = _expandedNodes;
+                        break;
                     case "UC":
                         _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost));
 
