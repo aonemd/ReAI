@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.Comparator;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
+
+import static util.Invoker.invoke;
 
 import search.State;
 import search.Operator;
@@ -90,22 +90,9 @@ public class EndGameState implements State {
     }
 
     public EndGameState applyOperator(String operatorName) {
-        Method method;
+        EndGameState invokedState = (EndGameState) invoke(this, operatorName);
 
-        try {
-            method = this.getClass().getDeclaredMethod(operatorName);
-            method.setAccessible(true);
-
-            return (EndGameState) method.invoke(this);
-        } catch (SecurityException
-                | NoSuchMethodException
-                | IllegalArgumentException
-                | IllegalAccessException
-                | InvocationTargetException e) {
-            System.out.println("Error:" + e);
-        }
-
-        return this;
+        return invokedState;
     }
 
     public boolean isGoal() {
