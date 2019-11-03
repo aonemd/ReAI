@@ -3,10 +3,9 @@ package endgame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.HashSet;
-import java.util.Collections;
 import java.util.stream.Collectors;
-import java.util.Comparator;
 
 import static util.Invoker.invoke;
 
@@ -18,8 +17,8 @@ public class EndGameState implements State {
     private int gridHeight;
     private Cell ironManPosition;
     private Cell thanosPosition;
-    private List<Cell> stonePositions;
-    private List<Cell> warriorPositions;
+    private Set<Cell> stonePositions;
+    private Set<Cell> warriorPositions;
     private HashMap<String, Operator> operators;
     private int ironManDamage;
     private boolean snapped;
@@ -28,8 +27,8 @@ public class EndGameState implements State {
                         int gridHeight,
                         Cell ironManPosition,
                         Cell thanosPosition,
-                        List<Cell> stonePositions,
-                        List<Cell> warriorPositions,
+                        Set<Cell> stonePositions,
+                        Set<Cell> warriorPositions,
                         HashMap<String, Operator> operators,
                         int ironManDamage,
                         boolean snapped) {
@@ -61,7 +60,7 @@ public class EndGameState implements State {
             validOperators.add(this.operators.get("collect"));
         }
         // kill
-        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        Set<Cell> adjacentCells = adjacentCells(this.ironManPosition);
         // kill if the two sets intersect
         if (new HashSet<Cell>(this.warriorPositions).removeAll(adjacentCells)) {
             validOperators.add(this.operators.get("kill"));
@@ -115,9 +114,6 @@ public class EndGameState implements State {
     }
 
     public String toString() {
-        this.stonePositions.sort(Comparator.naturalOrder());
-        this.warriorPositions.sort(Comparator.naturalOrder());
-
         String hashedStoneCells = String.join(",", this.stonePositions.stream().map(Cell::toString).collect(Collectors.toList()));
         String hashedwarriorCells = String.join(",", this.warriorPositions.stream().map(Cell::toString).collect(Collectors.toList()));
 
@@ -131,12 +127,12 @@ public class EndGameState implements State {
     }
 
     public EndGameState clone() {
-        List<Cell> clonedStonePositions = new ArrayList<Cell>();
+        Set<Cell> clonedStonePositions = new HashSet<Cell>();
         for (Cell stoneCell : this.stonePositions) {
             clonedStonePositions.add(stoneCell.clone());
         }
 
-        List<Cell> clonedWarriorPositions = new ArrayList<Cell>();
+        Set<Cell> clonedWarriorPositions = new HashSet<Cell>();
         for (Cell warriorCell : this.warriorPositions) {
             clonedWarriorPositions.add(warriorCell.clone());
         }
@@ -183,7 +179,7 @@ public class EndGameState implements State {
     }
 
     private EndGameState kill() {
-        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        Set<Cell> adjacentCells = adjacentCells(this.ironManPosition);
 
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
@@ -226,7 +222,7 @@ public class EndGameState implements State {
     }
 
     private boolean isAdjacentToThanos() {
-        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        Set<Cell> adjacentCells = adjacentCells(this.ironManPosition);
 
         return adjacentCells.contains(this.thanosPosition);
     }
@@ -234,7 +230,7 @@ public class EndGameState implements State {
     private int getAdjacentWarriorCount() {
         int adjacentWarriorCount = 0;
 
-        HashSet<Cell> adjacentCells = adjacentCells(this.ironManPosition);
+        Set<Cell> adjacentCells = adjacentCells(this.ironManPosition);
         for (Cell adjacentCell : adjacentCells) {
             if (this.warriorPositions.contains(adjacentCell)) {
                 adjacentWarriorCount++;
@@ -244,8 +240,8 @@ public class EndGameState implements State {
         return adjacentWarriorCount;
     }
 
-    private HashSet<Cell> adjacentCells(Cell centerCell) {
-        HashSet<Cell> cells = new HashSet<Cell>();
+    private Set<Cell> adjacentCells(Cell centerCell) {
+        Set<Cell> cells = new HashSet<Cell>();
         cells.add(centerCell.clone().incrementXBy(-1));
         cells.add(centerCell.clone().incrementXBy(1));
         cells.add(centerCell.clone().incrementYBy(1));

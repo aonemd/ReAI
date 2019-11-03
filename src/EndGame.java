@@ -2,6 +2,7 @@ package endgame;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.HashMap;
 
 import search.SearchProblem;
@@ -64,8 +65,8 @@ public class EndGame extends SearchProblem {
                                             gridHeight,
                                             ironManPosition,
                                             thanosPosition,
-                                            stonePositions,
-                                            warriorPositions,
+                                            new HashSet<Cell>(stonePositions),
+                                            new HashSet<Cell>(warriorPositions),
                                             operators,
                                             0,
                                             false);

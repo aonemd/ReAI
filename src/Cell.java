@@ -54,4 +54,14 @@ public class Cell implements Comparable {
 
         return new Integer (this.x).compareTo(otherCell.x);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+
+        hash = 71 * hash + this.x;
+        hash = 71 * hash + this.y;
+
+        return hash;
+    }
 }
