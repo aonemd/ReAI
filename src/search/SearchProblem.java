@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Collections;
 import static util.Inspector.inspect;
 
 public abstract class SearchProblem {
@@ -11,7 +12,12 @@ public abstract class SearchProblem {
     public State initialState;
 
     public static String search(SearchProblem searchProblem, String strategy) {
-        List<SearchTreeNode> nodeList = new SearchTreeNode(searchProblem.initialState, null, null, 0, 0).expand();
+        List<SearchTreeNode> nodeList = new SearchTreeNode(searchProblem.initialState,
+                null,
+                null,
+                0,
+                searchProblem.initialState.getCost())
+            .expand();
         int expandedNodeCount = 1;
 
         List<State> visitedStates = new ArrayList<State>();
@@ -37,6 +43,9 @@ public abstract class SearchProblem {
                     case "DF":
                         _expandedNodes.addAll(nodeList);
                         nodeList = _expandedNodes;
+                    case "UC":
+                        nodeList.addAll(_expandedNodes);
+                        Collections.sort(nodeList);
                         break;
                 }
             }
