@@ -8,7 +8,7 @@ import java.util.HashMap;
 import search.SearchProblem;
 import search.Operator;
 
-public class EndGame extends SearchProblem {
+public class Endgame extends SearchProblem {
     private String grid;
     private int gridWidth;
     private int gridHeight;
@@ -17,7 +17,7 @@ public class EndGame extends SearchProblem {
     private List<Cell> stonePositions;
     private List<Cell> warriorPositions;
 
-    public EndGame(String grid) {
+    public Endgame(String grid) {
         // parse grid into useful information
         String[] gridInfo = grid.split(";");
 
@@ -73,13 +73,13 @@ public class EndGame extends SearchProblem {
     }
 
     public static String solve(String grid, String strategy, boolean visualize) {
-        EndGame endGameProblem = new EndGame(grid);
+        Endgame endGameProblem = new Endgame(grid);
 
         return search(endGameProblem, strategy);
     }
 
 	public static void main(String[] args) {
-        String solution = EndGame.solve("2,2;0,0;1,0;1,1;0,1", "BF", false);
+        String solution = Endgame.solve("2,2;0,0;1,0;1,1;0,1", "BF", false);
 
         System.out.println(solution);
     }
