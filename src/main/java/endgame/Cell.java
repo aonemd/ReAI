@@ -8,6 +8,10 @@ public class Cell implements Comparable {
         this.y = y;
     }
 
+    public boolean inBounds(int m, int n) {
+        return x >= 0 && x < m && y >= 0 && y < n;
+    }
+
     public Cell incrementXBy(int increment) {
         this.x += increment;
 
@@ -29,13 +33,9 @@ public class Cell implements Comparable {
     }
 
     public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-
-        if (this.getClass() != other.getClass()) {
-            return false;
-        }
+        if (this == other) return true;
+        if (other == null) return false;
+        if (this.getClass() != other.getClass()) return false;
 
         Cell otherCell = (Cell) other;
         return this.x == otherCell.x && this.y == otherCell.y;

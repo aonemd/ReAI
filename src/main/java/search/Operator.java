@@ -1,15 +1,11 @@
 package search;
 
-public class Operator {
-    public String name;
-    public int cost;
+import java.util.function.Function;
 
-    public Operator(String name, int cost) {
-        this.name = name;
-        this.cost = cost;
-    }
+import util.Tuple;
 
-    public String toString() {
-        return this.name + "(" + this.cost + ")";
+public record Operator(String name, int cost, Function<State, Tuple<State, Integer>> applyFn) {
+    public Tuple<State, Integer> apply(State state) {
+        return applyFn().apply(state);
     }
 }

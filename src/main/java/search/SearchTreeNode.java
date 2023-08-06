@@ -1,84 +1,57 @@
 package search;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-public class SearchTreeNode implements Comparable {
-    public State state;
-    public SearchTreeNode parent;
-    public Operator operator;
-    public int depth;
-    public int pathCost;
-    private double evaluation;
+import util.Tuple;
 
-    public SearchTreeNode(State state, SearchTreeNode parent, Operator operator,
-            int depth, int pathCost) {
-        this.state = state;
-        this.parent = parent;
-        this.operator = operator;
-        this.depth = depth;
-        this.pathCost = pathCost;
-        this.evaluation = 0;
-    }
+import java.util.HashSet;
 
-    public List<SearchTreeNode> expand() {
-        List<SearchTreeNode> expandedNodes = new ArrayList<SearchTreeNode>();
-        for (Operator operator : this.state.validOperators()) {
-            State newState = this.state.clone().applyOperator(operator.name);
-            SearchTreeNode expandedNode = new SearchTreeNode(newState, this, operator, this.depth + 1, newState.getCost());
+public record SearchTreeNode(State state, SearchTreeNode parent, Operator operator, int depth, int pathCost) {
+    static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
-            expandedNodes.add(expandedNode);
+    public List<SearchTreeNode> expand(List<Operator> operators, HashSet<State> visited, int m, int n) {
+        List<SearchTreeNode> nodes = new ArrayList<>();
+
+        // calculate state cost before applying the operator
+        // ...and add operator cost after applying the operator
+        //
+        int stateCost = this.state().calculateStateCost(m, n);
+
+        for (Operator op : operators) {
+            Tuple<State, Integer> operatorResult = op.apply(this.state());
+            State newState = operatorResult.first();
+            int opCost = operatorResult.second();
+
+            if (newState.valid(m, n)) {
+                var newPathCost = this.pathCost() + stateCost;
+                newPathCost += opCost;
+
+                var nxtNode = new SearchTreeNode(newState, this, op, depth() + 1, newPathCost);
+
+                System.out.println((operator() != null ? operator().name() : "") + "->" + nxtNode.operator().name()
+                        + " (" + op.cost() + "|" + stateCost + ") " + nxtNode.pathCost() + ", depth: " + nxtNode.depth());
+
+                nodes.add(nxtNode);
+            }
         }
 
-        return expandedNodes;
-    }
-
-    public Double getEvaluation() {
-        return this.evaluation;
-    }
-
-    public void setEvaluation(double evaluation) {
-        this.evaluation = evaluation;
+        return nodes;
     }
 
     public String toPlan() {
         List<String> planOperators = new ArrayList<String>();
-        SearchTreeNode current = this;
-        while (current.parent != null) {
-            planOperators.add(current.operator.name);
 
-            current = current.parent;
+        SearchTreeNode current = this;
+        while (current.parent() != null) {
+            planOperators.add(current.operator().name());
+
+            current = current.parent();
         }
 
         Collections.reverse(planOperators);
 
         return String.join(",", planOperators);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-
-        if (this.getClass() != other.getClass()) {
-            return false;
-        }
-
-        SearchTreeNode otherNode = (SearchTreeNode) other;
-        return (this.state.equals(otherNode.state)
-                && this.pathCost == otherNode.pathCost);
-    }
-
-    @Override
-    public int compareTo(Object other) {
-        if (this == other) {
-            return 0;
-        }
-
-        SearchTreeNode otherNode = (SearchTreeNode) other;
-
-        return new Double(this.evaluation).compareTo(otherNode.evaluation);
     }
 }

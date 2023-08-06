@@ -9,72 +9,72 @@ import java.util.Collections;
 import static util.Inspector.inspect;
 
 public abstract class SearchProblem {
-    public HashMap<String, Operator> operators;
-    public State initialState;
-
-    public static String search(SearchProblem searchProblem, String strategy) {
-        List<SearchTreeNode> nodeList = new SearchTreeNode(searchProblem.initialState,
-                null,
-                null,
-                0,
-                searchProblem.initialState.getCost())
-            .expand();
-        int expandedNodeCount = 1;
-
-        Set<State> visitedStates = new HashSet<State>();
-
-        SearchTreeNode currentNode = null;
-        Iterator<SearchTreeNode> nodeListIterator = nodeList.iterator();
-        while (nodeListIterator.hasNext()) {
-            currentNode = nodeList.remove(0);
-
-            if (currentNode.state.isGoal()) {
-                return currentNode.toPlan() + ";" + currentNode.getEvaluation() +  ";" + expandedNodeCount;
-            } else if (!currentNode.state.isDead()) {
-                if (visitedStates.contains(currentNode.state)) {
-                    continue;
-                }
-
-                List<SearchTreeNode> _expandedNodes = currentNode.expand();
-
-                expandedNodeCount += 1;
-                switch (strategy) {
-                    case "BF":
-                        nodeList.addAll(_expandedNodes);
-                        break;
-                    case "DF":
-                        _expandedNodes.addAll(nodeList);
-                        nodeList = _expandedNodes;
-                        break;
-                    case "ID":
-                        // TODO: Implement Me
-                        _expandedNodes.addAll(nodeList);
-                        nodeList = _expandedNodes;
-                        break;
-                    case "UC":
-                        _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost));
-
-                        nodeList.addAll(_expandedNodes);
-                        Collections.sort(nodeList);
-                        break;
-                    case "GRi":
-                        _expandedNodes.forEach((node) -> node.setEvaluation(node.state.hfI()));
-
-                        nodeList.addAll(_expandedNodes);
-                        Collections.sort(nodeList);
-                        break;
-                    case "ASi":
-                        _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost + node.state.hfI()));
-
-                        nodeList.addAll(_expandedNodes);
-                        Collections.sort(nodeList);
-                        break;
-                }
-            }
-
-            visitedStates.add(currentNode.state);
-        }
-
-        return "There is no solution";
-    }
+    // public HashMap<String, Operator> operators;
+    // public State initialState;
+    //
+    // public static String search(SearchProblem searchProblem, String strategy) {
+    //     List<SearchTreeNode> nodeList = new SearchTreeNode(searchProblem.initialState,
+    //             null,
+    //             null,
+    //             0,
+    //             searchProblem.initialState.getCost())
+    //         .expand();
+    //     int expandedNodeCount = 1;
+    //
+    //     Set<State> visitedStates = new HashSet<State>();
+    //
+    //     SearchTreeNode currentNode = null;
+    //     Iterator<SearchTreeNode> nodeListIterator = nodeList.iterator();
+    //     while (nodeListIterator.hasNext()) {
+    //         currentNode = nodeList.remove(0);
+    //
+    //         if (currentNode.state.isGoal()) {
+    //             return currentNode.toPlan() + ";" + currentNode.getEvaluation() +  ";" + expandedNodeCount;
+    //         } else if (!currentNode.state.isDead()) {
+    //             if (visitedStates.contains(currentNode.state)) {
+    //                 continue;
+    //             }
+    //
+    //             List<SearchTreeNode> _expandedNodes = currentNode.expand();
+    //
+    //             expandedNodeCount += 1;
+    //             switch (strategy) {
+    //                 case "BF":
+    //                     nodeList.addAll(_expandedNodes);
+    //                     break;
+    //                 case "DF":
+    //                     _expandedNodes.addAll(nodeList);
+    //                     nodeList = _expandedNodes;
+    //                     break;
+    //                 case "ID":
+    //                     // TODO: Implement Me
+    //                     _expandedNodes.addAll(nodeList);
+    //                     nodeList = _expandedNodes;
+    //                     break;
+    //                 case "UC":
+    //                     _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost));
+    //
+    //                     nodeList.addAll(_expandedNodes);
+    //                     Collections.sort(nodeList);
+    //                     break;
+    //                 case "GRi":
+    //                     _expandedNodes.forEach((node) -> node.setEvaluation(node.state.hfI()));
+    //
+    //                     nodeList.addAll(_expandedNodes);
+    //                     Collections.sort(nodeList);
+    //                     break;
+    //                 case "ASi":
+    //                     _expandedNodes.forEach((node) -> node.setEvaluation(node.pathCost + node.state.hfI()));
+    //
+    //                     nodeList.addAll(_expandedNodes);
+    //                     Collections.sort(nodeList);
+    //                     break;
+    //             }
+    //         }
+    //
+    //         visitedStates.add(currentNode.state);
+    //     }
+    //
+    //     return "There is no solution";
+    // }
 }
