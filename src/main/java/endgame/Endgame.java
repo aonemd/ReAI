@@ -70,9 +70,7 @@ public class Endgame /* extends SearchProblem */ {
             }
         }
 
-        int m = grid.length, n = grid[0].length;
-
-        this.operators = OperatorsFactory.build(m, n);
+        this.operators = OperatorsBuilder.build(this.gridHeight, this.gridWidth);
         this.initialState = new EndGameState(false, ironManPosition, thanosPosition, stonePositions, warriorPositions);
     }
 

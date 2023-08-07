@@ -7,7 +7,7 @@ import search.Operator;
 import search.State;
 import util.Tuple;
 
-public class OperatorsFactory {
+public class OperatorsBuilder {
     static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
     public static List<Operator> build(int m, int n) {
