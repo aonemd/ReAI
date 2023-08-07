@@ -23,20 +23,16 @@ public class EndGameState implements State {
     }
 
     public boolean valid(int... params) {
-        int m = params[0], n = params[1];
-
         if (this.equals(toEmptyState()))
             return false;
         if (this.ironManPosition() == null)
-            return false;
-        if (!this.ironManPosition().inBounds(m, n))
             return false;
 
         return true;
     }
 
     public boolean goal() {
-        return snapped;
+        return snapped();
     }
 
     public boolean canSnap() {
@@ -65,16 +61,12 @@ public class EndGameState implements State {
 
     @Override
     public int calculateStateCost(int... params) {
-        int m = params[0], n = params[1];
         var cur = this.ironManPosition();
 
         int totalCost = 0;
 
         for (int[] dir : dirs) {
             Cell adjCell = new Cell(cur.x + dir[0], cur.y + dir[1]);
-
-            if (!adjCell.inBounds(m, n))
-                continue;
 
             if (this.warriorPositions().contains(adjCell)) {
                 totalCost += 1;

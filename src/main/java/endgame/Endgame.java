@@ -1,19 +1,10 @@
 package endgame;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
-import util.Tuple;
-import search.Operator;
-import search.SearchTreeNode;
-import search.State;
+import search.SearchProblem;
 
-
-
-public class Endgame /* extends SearchProblem */ {
+public class Endgame extends SearchProblem {
     private static char[][] grid;
     private int gridWidth;
     private int gridHeight;
@@ -21,9 +12,6 @@ public class Endgame /* extends SearchProblem */ {
     private Cell thanosPosition;
     private HashSet<Cell> stonePositions;
     private HashSet<Cell> warriorPositions;
-    private List<Operator> operators;
-
-    static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
     public Endgame(String input) {
         // parse grid into useful information
@@ -77,59 +65,9 @@ public class Endgame /* extends SearchProblem */ {
     public static String solve(String grid, String strategy, boolean visualize) {
         Endgame endGameProblem = new Endgame(grid);
 
-        // return search(endGameProblem, strategy);
-        return "";
-    }
-
-    public static void main(String[] args) {
-        // String input = "2,2;0,0;1,0;1,1;0,1";
-        // String input = "2,2;0,0;1,0";
-		String input = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-        // String solution = Endgame.solve(input, "BF", false);
-
-        Endgame endGameProblem = new Endgame(input);
-        int m = endGameProblem.grid.length, n = endGameProblem.grid[0].length;
-
-        // print grid before
         printGrid(endGameProblem.grid);
 
-        HashSet<State> visited = new HashSet<>();
-
-        var initState = new EndGameState(
-                false,
-                endGameProblem.ironManPosition,
-                endGameProblem.thanosPosition,
-                endGameProblem.stonePositions,
-                endGameProblem.warriorPositions);
-        SearchTreeNode curNode = new SearchTreeNode(initState, null, null, 0, 0);
-        SearchTreeNode goalNode = null;
-
-        Queue<SearchTreeNode> que = new LinkedList<>();
-        que.offer(curNode);
-
-        while (!que.isEmpty()) {
-            curNode = que.poll();
-
-            if (!visited.add(curNode.state())) continue;
-
-            if (((EndGameState)curNode.state()).snapped()) {
-                goalNode = curNode;
-                break;
-            }
-
-            for (SearchTreeNode nxtNode : curNode.expand(endGameProblem.operators, visited, m, n)) {
-                que.offer(nxtNode);
-            }
-
-            if (goalNode != null) {
-                break;
-            }
-
-            System.out.println();
-            System.out.println("snapped: " + curNode.state().goal());
-            System.out.println("score: " + curNode.pathCost());
-            System.out.println("--------------------");
-        }
+        var goalNode = endGameProblem.search();
 
         if (goalNode != null) {
             System.out.println("-+-+-+-+-+-+-+-+-+-+-");
@@ -138,6 +76,16 @@ public class Endgame /* extends SearchProblem */ {
             System.out.println("-+-+-+-+-+-+-+-+-+-+-");
             printGrid(endGameProblem.grid);
         }
+
+        return "";
+    }
+
+    public static void main(String[] args) {
+        String input = "2,2;0,0;1,0;1,1;0,1";
+        // String input = "2,2;0,0;1,0";
+        // String input = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+
+        String solution = Endgame.solve(input, "BF", false);
     }
 
     static void printGrid(char[][] grid) {

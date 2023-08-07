@@ -11,20 +11,20 @@ import java.util.HashSet;
 public record SearchTreeNode(State state, SearchTreeNode parent, Operator operator, int depth, int pathCost) {
     static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
-    public List<SearchTreeNode> expand(List<Operator> operators, HashSet<State> visited, int m, int n) {
+    public List<SearchTreeNode> expand(List<Operator> operators, HashSet<State> visited) {
         List<SearchTreeNode> nodes = new ArrayList<>();
 
         // calculate state cost before applying the operator
         // ...and add operator cost after applying the operator
         //
-        int stateCost = this.state().calculateStateCost(m, n);
+        int stateCost = this.state().calculateStateCost();
 
         for (Operator op : operators) {
             Tuple<State, Integer> operatorResult = op.apply(this.state());
             State newState = operatorResult.first();
             int opCost = operatorResult.second();
 
-            if (newState.valid(m, n)) {
+            if (newState.valid()) {
                 var newPathCost = this.pathCost() + stateCost;
                 newPathCost += opCost;
 
