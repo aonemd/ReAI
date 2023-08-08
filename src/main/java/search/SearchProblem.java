@@ -1,18 +1,21 @@
 package search;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+
+import search.strategy.*;
 
 public abstract class SearchProblem {
     public List<Operator> operators;
     public State initialState;
+    public SearchStrategy searchStrategy = new BFS();
 
     public SearchTreeNode search() {
         SearchTreeNode curNode = new SearchTreeNode(this.initialState, null, null, 0, 0);
 
-        Queue<SearchTreeNode> que = new LinkedList<>();
+        Deque<SearchTreeNode> que = new ArrayDeque<>();
         que.offer(curNode);
 
         HashSet<State> visited = new HashSet<>();
@@ -27,9 +30,7 @@ public abstract class SearchProblem {
                 return curNode;
             }
 
-            for (SearchTreeNode nxtNode : curNode.expand(this.operators, visited)) {
-                que.offer(nxtNode);
-            }
+            searchStrategy.addNodes(que, curNode.expand(this.operators, visited));
 
             System.out.println();
             System.out.println("goal: " + curNode.state().goal());
