@@ -9,8 +9,6 @@ import util.Tuple;
 import java.util.HashSet;
 
 public record SearchTreeNode(State state, SearchTreeNode parent, Operator operator, int depth, int pathCost) {
-    static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
-
     public List<SearchTreeNode> expand(List<Operator> operators, HashSet<State> visited) {
         List<SearchTreeNode> nodes = new ArrayList<>();
 
@@ -22,16 +20,12 @@ public record SearchTreeNode(State state, SearchTreeNode parent, Operator operat
         for (Operator op : operators) {
             Tuple<State, Integer> operatorResult = op.apply(this.state());
             State newState = operatorResult.first();
-            int opCost = operatorResult.second();
+            int appliedOperatorCost = operatorResult.second();
 
             if (newState.valid()) {
-                var newPathCost = this.pathCost() + stateCost;
-                newPathCost += opCost;
+                var newPathCost = this.pathCost() + stateCost + appliedOperatorCost;
 
                 var nxtNode = new SearchTreeNode(newState, this, op, depth() + 1, newPathCost);
-
-                System.out.println((operator() != null ? operator().name() : "") + "->" + nxtNode.operator().name()
-                        + " (" + op.cost() + "|" + stateCost + ") " + nxtNode.pathCost() + ", depth: " + nxtNode.depth());
 
                 nodes.add(nxtNode);
             }

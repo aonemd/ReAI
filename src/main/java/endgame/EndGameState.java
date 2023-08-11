@@ -23,9 +23,9 @@ public class EndGameState implements State {
     }
 
     public boolean valid(int... params) {
-        if (this.equals(toEmptyState()))
-            return false;
         if (this.ironManPosition() == null)
+            return false;
+        if (this.equals(toEmptyState()))
             return false;
 
         return true;

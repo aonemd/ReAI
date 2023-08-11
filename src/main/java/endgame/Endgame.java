@@ -65,27 +65,30 @@ public class Endgame extends SearchProblem {
     public static String solve(String grid, String strategy, boolean visualize) {
         Endgame endGameProblem = new Endgame(grid);
 
-        printGrid(endGameProblem.grid);
-
         var goalNode = endGameProblem.search();
 
+        printGrid(endGameProblem.grid);
         if (goalNode != null) {
-            System.out.println("-+-+-+-+-+-+-+-+-+-+-");
-            System.out.println("snapped: " + goalNode.state().goal());
-            System.out.println(goalNode.toPlan() + ";" + goalNode.pathCost() + ";" + goalNode.depth());
-            System.out.println("-+-+-+-+-+-+-+-+-+-+-");
-            printGrid(endGameProblem.grid);
+            return goalNode.toPlan() + ";" + goalNode.pathCost() + ";" + endGameProblem.expandedNodesCount;
         }
 
-        return "";
+        return "There is no solution";
     }
 
     public static void main(String[] args) {
-        String input = "2,2;0,0;1,0;1,1;0,1";
-        // String input = "2,2;0,0;1,0";
-        // String input = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+        String input = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+        // String input = "3,3;0,0;1,0;0,2;2,0";
+        // String input = "2,2;0,0;1,0;1,1;0,1";
+        // String input = "2,2;0,0;1,0;1,1;0,1";
+
+        long startTime = System.nanoTime();
 
         String solution = Endgame.solve(input, "BF", false);
+        System.out.println(solution);
+
+        long endTime = System.nanoTime();
+        long timeElapsed = (endTime - startTime) / 1000000;
+        System.out.println("Time: " + timeElapsed + "ms");
     }
 
     static void printGrid(char[][] grid) {
