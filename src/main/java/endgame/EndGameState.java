@@ -81,28 +81,12 @@ public class EndGameState implements State {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other)
-            return true;
-        if (other == null)
-            return false;
-        if (this.getClass() != other.getClass())
-            return false;
-
-        EndGameState otherState = (EndGameState) other;
-        return (this.ironManPosition() != null && this.ironManPosition().equals(otherState.ironManPosition())
-        // && this.stonePositions().equals(otherState.stonePositions())
-        // && this.warriorPositions().equals(otherState.warriorPositions())
-                && this.snapped() == otherState.snapped());
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public EndGameState clone() {
         var clonedIronManPosition = new Cell(ironManPosition().x, ironManPosition().y);
         var clonedThanosPosition = new Cell(thanosPosition().x, thanosPosition().y);
-        var clonedStonePositions = (HashSet<Cell>) stonePositions().clone();
-        var clonedWarriorPositions = (HashSet<Cell>) warriorPositions().clone();
+        HashSet<Cell> clonedStonePositions = (HashSet<Cell>) stonePositions().clone();
+        HashSet<Cell> clonedWarriorPositions = (HashSet<Cell>) warriorPositions().clone();
 
         return new EndGameState(snapped(), clonedIronManPosition, clonedThanosPosition, clonedStonePositions,
                 clonedWarriorPositions);
@@ -114,16 +98,33 @@ public class EndGameState implements State {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (other == null)
+            return false;
+        if (this.getClass() != other.getClass())
+            return false;
+
+        EndGameState otherState = (EndGameState) other;
+        return (((this.ironManPosition() == null && otherState.ironManPosition() == null)
+                || (this.ironManPosition() != null && this.ironManPosition().equals(otherState.ironManPosition())))
+                && ((this.stonePositions() == null && otherState.stonePositions() == null)
+                        || (this.stonePositions().equals(otherState.stonePositions())))
+                && ((this.warriorPositions() == null && otherState.warriorPositions() == null)
+                        || (this.warriorPositions().equals(otherState.warriorPositions())))
+                && this.snapped() == otherState.snapped());
+    }
+
+    @Override
     public int hashCode() {
         int prime = 31;
         int result = 1;
 
         result = prime * result + ((this.ironManPosition() == null) ? 0 : this.ironManPosition().hashCode());
-        // result = prime * result + ((this.snapped() == true) ? 0 : 1);
-        result = prime * result + ((this.stonePositions() == null || this.stonePositions.size() == 0) ? 0
-                : this.stonePositions().hashCode());
-        result = prime * result + ((this.warriorPositions() == null || this.warriorPositions().size() == 0) ? 0
-                : this.warriorPositions().hashCode());
+        result = prime * result + ((this.stonePositions() == null || this.stonePositions.size() == 0) ? 0 : this.stonePositions().hashCode());
+        result = prime * result + ((this.warriorPositions() == null || this.warriorPositions().size() == 0) ? 0 : this.warriorPositions().hashCode());
+        result = prime * result + (this.snapped() ? 1 : 0);
 
         return result;
     }
