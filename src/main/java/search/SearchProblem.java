@@ -11,6 +11,7 @@ public abstract class SearchProblem {
     public List<Operator> operators;
     public State initialState;
     public SearchStrategy searchStrategy = new BFS();
+    public int expandedNodesCount = 0;
 
     public SearchTreeNode search() {
         SearchTreeNode curNode = new SearchTreeNode(this.initialState, null, null, 0, 0);
@@ -30,12 +31,11 @@ public abstract class SearchProblem {
                 return curNode;
             }
 
-            searchStrategy.addNodes(que, curNode.expand(this.operators, visited));
+            var expandedNodes = curNode.expand(this.operators, visited);
 
-            System.out.println();
-            System.out.println("goal: " + curNode.state().goal());
-            System.out.println("score: " + curNode.pathCost());
-            System.out.println("--------------------");
+            searchStrategy.addNodes(que, expandedNodes);
+
+            this.expandedNodesCount++;
         }
 
         return null;
