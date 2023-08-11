@@ -49,10 +49,10 @@ public class Cell implements Comparable {
 
         Cell otherCell = (Cell) other;
         if (this.x == otherCell.x) {
-            return new Integer (this.y).compareTo(otherCell.y);
+            return this.y - otherCell.y;
         }
 
-        return new Integer (this.x).compareTo(otherCell.x);
+        return this.x - otherCell.x;
     }
 
     @Override
