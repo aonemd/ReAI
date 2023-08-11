@@ -10,6 +10,7 @@ public class EndGameState implements State {
     private Cell thanosPosition;
     private HashSet<Cell> stonePositions;
     private HashSet<Cell> warriorPositions;
+    private static EndGameState emptyState = new EndGameState(false, null, null, null, null);
 
     static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
@@ -94,7 +95,7 @@ public class EndGameState implements State {
 
     @Override
     public EndGameState toEmptyState() {
-        return new EndGameState(snapped(), null, null, null, null);
+        return emptyState;
     }
 
     @Override
