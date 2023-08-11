@@ -67,8 +67,12 @@ public class Endgame extends SearchProblem {
 
         var goalNode = endGameProblem.search();
 
-        printGrid(endGameProblem.grid);
         if (goalNode != null) {
+            if (visualize) {
+                int m = endGameProblem.grid.length, n = endGameProblem.grid[0].length;
+                ConsoleVisualizer.run(goalNode, m, n);
+            }
+
             return goalNode.toPlan() + ";" + goalNode.pathCost() + ";" + endGameProblem.expandedNodesCount;
         }
 
@@ -83,28 +87,11 @@ public class Endgame extends SearchProblem {
 
         long startTime = System.nanoTime();
 
-        String solution = Endgame.solve(input, "BF", false);
+        String solution = Endgame.solve(input, "BF", true);
         System.out.println(solution);
 
         long endTime = System.nanoTime();
         long timeElapsed = (endTime - startTime) / 1000000;
         System.out.println("Time: " + timeElapsed + "ms");
-    }
-
-    static void printGrid(char[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                char out;
-                if (grid[i][j] != 0) {
-                    out = grid[i][j];
-                } else {
-                    out = '-';
-                }
-                System.out.print(out + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 }
