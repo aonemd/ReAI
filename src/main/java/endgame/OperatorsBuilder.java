@@ -13,32 +13,6 @@ public class OperatorsBuilder {
     public static List<Operator> build(int m, int n) {
         List<Operator> operators = new ArrayList<Operator>();
 
-        operators.add(new Operator("COLLECT", 3, (State state) -> {
-            EndGameState curState = (EndGameState) state;
-
-            int finalCost = 3;
-            if (curState.stonePositions().contains(curState.ironManPosition())) {
-                var newState = curState.clone();
-                newState.stonePositions().remove(curState.ironManPosition());
-
-                return new Tuple<State, Integer>(newState, finalCost);
-            }
-
-            return new Tuple<State, Integer>(curState.toEmptyState(), 0);
-        }));
-
-        operators.add(new Operator("SNAP", 0, (State state) -> {
-            EndGameState curState = (EndGameState) state;
-
-            var newState = curState.clone();
-            if (newState.ironManPosition().equals(newState.thanosPosition()) && newState.canSnap()) {
-                return new Tuple<State, Integer>(new EndGameState(true, newState.ironManPosition(),
-                        newState.thanosPosition(), newState.stonePositions(), newState.warriorPositions()), 0);
-            }
-
-            return new Tuple<State, Integer>(curState.toEmptyState(), 0);
-        }));
-
         operators.add(new Operator("UP", 0, (State state) -> {
             EndGameState curState = (EndGameState) state;
 
@@ -119,6 +93,20 @@ public class OperatorsBuilder {
             return new Tuple<State, Integer>(curState.toEmptyState(), 0);
         }));
 
+        operators.add(new Operator("COLLECT", 3, (State state) -> {
+            EndGameState curState = (EndGameState) state;
+
+            int finalCost = 3;
+            if (curState.stonePositions().contains(curState.ironManPosition())) {
+                var newState = curState.clone();
+                newState.stonePositions().remove(curState.ironManPosition());
+
+                return new Tuple<State, Integer>(newState, finalCost);
+            }
+
+            return new Tuple<State, Integer>(curState.toEmptyState(), 0);
+        }));
+
         operators.add(new Operator("KILL", 2, (State state) -> {
             EndGameState curState = (EndGameState) state;
 
@@ -141,6 +129,18 @@ public class OperatorsBuilder {
             if (killed > 0) {
                 int finalCost = killed * 2;
                 return new Tuple<State, Integer>(newState, finalCost);
+            }
+
+            return new Tuple<State, Integer>(curState.toEmptyState(), 0);
+        }));
+
+        operators.add(new Operator("SNAP", 0, (State state) -> {
+            EndGameState curState = (EndGameState) state;
+
+            var newState = curState.clone();
+            if (newState.ironManPosition().equals(newState.thanosPosition()) && newState.canSnap()) {
+                return new Tuple<State, Integer>(new EndGameState(true, newState.ironManPosition(),
+                        newState.thanosPosition(), newState.stonePositions(), newState.warriorPositions()), 0);
             }
 
             return new Tuple<State, Integer>(curState.toEmptyState(), 0);
