@@ -100,12 +100,9 @@ public class EndGameState implements State {
 
     @Override
     public boolean equals(Object other) {
-        if (this == other)
-            return true;
-        if (other == null)
-            return false;
-        if (this.getClass() != other.getClass())
-            return false;
+        if (this == other) return true;
+        if (other == null) return false;
+        if (this.getClass() != other.getClass()) return false;
 
         EndGameState otherState = (EndGameState) other;
         return (((this.ironManPosition() == null && otherState.ironManPosition() == null)
