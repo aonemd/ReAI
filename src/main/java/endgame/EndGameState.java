@@ -119,13 +119,13 @@ public class EndGameState implements State {
 
     @Override
     public int hashCode() {
-        int prime = 31;
+        int prime = 37;
         int result = 1;
 
         result = prime * result + ((this.ironManPosition() == null) ? 0 : this.ironManPosition().hashCode());
-        result = prime * result + ((this.stonePositions() == null || this.stonePositions.size() == 0) ? 0 : this.stonePositions().hashCode());
-        result = prime * result + ((this.warriorPositions() == null || this.warriorPositions().size() == 0) ? 0 : this.warriorPositions().hashCode());
-        result = prime * result + (this.snapped() ? 1 : 0);
+        result = prime * result + ((this.stonePositions() == null) ? 0 : this.stonePositions().hashCode());
+        result = prime * result + ((this.warriorPositions() == null) ? 0 : this.warriorPositions().hashCode());
+        result = prime * result + (this.snapped() ? 0 : 1);
 
         return result;
     }

@@ -57,11 +57,12 @@ public class Cell implements Comparable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int prime = 37;
+        int result = 1;
 
-        hash = 71 * hash + this.x;
-        hash = 71 * hash + this.y;
+        result = prime * result + this.x;
+        result = prime * result + this.y;
 
-        return hash;
+        return result;
     }
 }
