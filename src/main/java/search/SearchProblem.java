@@ -10,10 +10,11 @@ import search.strategy.*;
 public abstract class SearchProblem {
     public List<Operator> operators;
     public State initialState;
-    public SearchStrategy searchStrategy = new BFS();
     public int expandedNodesCount = 0;
 
-    public SearchTreeNode search() {
+    public abstract String solve(String grid, SearchStrategy searchStrategy, boolean visualize);
+
+    public SearchTreeNode search(SearchStrategy searchStrategy) {
         SearchTreeNode curNode = new SearchTreeNode(this.initialState, null, null, 0, 0);
 
         Deque<SearchTreeNode> que = new ArrayDeque<>();

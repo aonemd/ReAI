@@ -3,6 +3,7 @@ package endgame;
 import java.util.HashSet;
 
 import search.SearchProblem;
+import search.strategy.SearchStrategy;
 
 public class Endgame extends SearchProblem {
     private static char[][] grid;
@@ -13,7 +14,24 @@ public class Endgame extends SearchProblem {
     private HashSet<Cell> stonePositions;
     private HashSet<Cell> warriorPositions;
 
-    public Endgame(String input) {
+    public String solve(String grid, SearchStrategy searchStrategy, boolean visualize) {
+        this.parse(grid);
+
+        var goalNode = this.search(searchStrategy);
+
+        if (goalNode != null) {
+            if (visualize) {
+                int m = this.grid.length, n = this.grid[0].length;
+                ConsoleVisualizer.run(goalNode, m, n);
+            }
+
+            return goalNode.toPlan() + ";" + goalNode.pathCost() + ";" + this.expandedNodesCount;
+        }
+
+        return "There is no solution";
+    }
+
+    private void parse(String input) {
         // parse grid into useful information
         String[] gridInfo = input.split(";");
 
@@ -60,38 +78,5 @@ public class Endgame extends SearchProblem {
 
         this.operators = OperatorsBuilder.build(this.gridHeight, this.gridWidth);
         this.initialState = new EndGameState(false, ironManPosition, thanosPosition, stonePositions, warriorPositions);
-    }
-
-    public static String solve(String grid, String strategy, boolean visualize) {
-        Endgame endGameProblem = new Endgame(grid);
-
-        var goalNode = endGameProblem.search();
-
-        if (goalNode != null) {
-            if (visualize) {
-                int m = endGameProblem.grid.length, n = endGameProblem.grid[0].length;
-                ConsoleVisualizer.run(goalNode, m, n);
-            }
-
-            return goalNode.toPlan() + ";" + goalNode.pathCost() + ";" + endGameProblem.expandedNodesCount;
-        }
-
-        return "There is no solution";
-    }
-
-    public static void main(String[] args) {
-        String input = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-        // String input = "3,3;0,0;1,0;0,2;2,0";
-        // String input = "2,2;0,0;1,0;1,1;0,1";
-        // String input = "2,2;0,0;1,0;1,1;0,1";
-
-        long startTime = System.nanoTime();
-
-        String solution = Endgame.solve(input, "BF", true);
-        System.out.println(solution);
-
-        long endTime = System.nanoTime();
-        long timeElapsed = (endTime - startTime) / 1000000;
-        System.out.println("Time: " + timeElapsed + "ms");
     }
 }
