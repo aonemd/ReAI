@@ -8,6 +8,9 @@
 dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
   testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+  implementation("org.springframework.boot:spring-boot-starter-web")
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 repositories {
@@ -18,10 +21,15 @@ plugins {
   application
   java
   kotlin("jvm") version "1.9.0"
+
+  id("org.springframework.boot") version "3.1.2"
+  id("io.spring.dependency-management") version "1.1.2"
 }
+apply(plugin = "io.spring.dependency-management")
 
 application {
-  mainClass.set("endgame.Endgame")
+  // mainClass.set("endgame.Endgame")
+  mainClass.set("endgame.Main")
 }
 
 tasks.named<Test>("test") {
