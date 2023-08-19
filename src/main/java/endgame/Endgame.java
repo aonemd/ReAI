@@ -14,6 +14,13 @@ public class Endgame extends SearchProblem {
     private HashSet<Cell> stonePositions;
     private HashSet<Cell> warriorPositions;
 
+    public Endgame() {
+    }
+
+    public Endgame(String grid) {
+        this.parse(grid);
+    }
+
     public String solve(String grid, SearchStrategy searchStrategy, boolean visualize) {
         this.parse(grid);
 

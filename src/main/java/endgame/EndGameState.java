@@ -40,6 +40,10 @@ public class EndGameState implements State {
         return stonePositions().size() == 0 && warriorPositions().size() == 0;
     }
 
+    public boolean getSnapped() {
+        return snapped;
+    }
+
     public boolean snapped() {
         return snapped;
     }
