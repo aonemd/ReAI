@@ -1,21 +1,19 @@
 package endgame
 
 import org.springframework.stereotype.Service
-import search.SearchTreeNode
-import search.strategy.SearchStrategy
 import search.strategy.BFS
+import search.strategy.SearchStrategy
 
 @Service
 class EndgameService() {
   fun runSearch(grid: String, algo: SearchStrategy = BFS()): EndgameDto {
     val problem = Endgame(grid)
-
     val goal = problem.search(algo)
 
-    var nodes = emptyArray<SearchTreeNode>()
+    var nodes = emptyArray<NodeDto>()
     var current = goal
     while (current.parent() != null) {
-      nodes += current
+      nodes += current.toNodeDto()
 
       current = current.parent()
     }
