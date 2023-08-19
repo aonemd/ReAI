@@ -4,6 +4,7 @@
  * This is a general purpose Gradle build.
  * To learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.2/samples
  */
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
@@ -11,6 +12,10 @@ dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-web")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  runtimeOnly("org.springframework.boot:spring-boot-devtools")
+
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+  implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
 
 repositories {
@@ -21,6 +26,7 @@ plugins {
   application
   java
   kotlin("jvm") version "1.9.0"
+  kotlin("plugin.spring") version "1.9.0"
 
   id("org.springframework.boot") version "3.1.2"
   id("io.spring.dependency-management") version "1.1.2"
@@ -28,8 +34,8 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 application {
-  // mainClass.set("endgame.Endgame")
-  mainClass.set("endgame.Main")
+  // mainClass.set("endgame.Main")
+  mainClass.set("endgame.EndgameApplicationKt")
 }
 
 tasks.named<Test>("test") {
@@ -39,5 +45,11 @@ tasks.named<Test>("test") {
 
   testLogging {
       events("passed")
+  }
+}
+
+tasks.withType<KotlinCompile> {
+  kotlinOptions {
+    freeCompilerArgs += "-Xjsr305=strict"
   }
 }
