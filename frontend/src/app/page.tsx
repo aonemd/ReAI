@@ -66,7 +66,7 @@ export default function Home() {
     async function callAPI() {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/endgame/search?grid=5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3&algo=bfs`
+          `http://localhost:8080/api/endgame/search?grid=5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3&algo=ids`
         );
         const data = await res.json();
         console.log(data);
@@ -95,6 +95,18 @@ export default function Home() {
       <h1>Hell, world!</h1>
 
       <Grid key={currentNodeIndex} node={data.path[currentNodeIndex]} />
+
+      <div className="flex flex-row justify-center items-center space-x-4 mt-7">
+        <div className="capitalize text-lg">
+          algo: <span className="uppercase">{data.algo}</span>
+        </div>
+        <div className="capitalize text-lg">|</div>
+        <div className="capitalize text-lg">score: {data.score}</div>
+        <div className="capitalize text-lg">|</div>
+        <div className="capitalize text-lg">
+          expanded nodes: {data.numOfNodes}
+        </div>
+      </div>
     </div>
   );
 }
