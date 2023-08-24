@@ -24,7 +24,7 @@ class EndgameController(private val endgameService: EndgameService) {
   }
 
   @CrossOrigin
-  @GetMapping("/search/stragies", produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+  @GetMapping("/search/strategies", produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
   fun Algos(): ResponseEntity<Set<String>> {
     return ResponseEntity.status(HttpStatus.OK).body(SearchProblem.searchStrategies.keys)
   }
