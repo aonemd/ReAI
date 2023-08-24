@@ -32,7 +32,7 @@ class EndgameController(private val endgameService: EndgameService) {
   @CrossOrigin
   @GetMapping("/search", produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
   fun Search(@RequestParam grid: String, @RequestParam algo: String): ResponseEntity<EndgameDto> {
-    val dto = endgameService.runSearch(grid)
+    val dto = endgameService.runSearch(grid, algo)
 
     return ResponseEntity.status(HttpStatus.OK).body(dto)
   }
