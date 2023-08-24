@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+import search.SearchProblem;
+
 @RestController
 @RequestMapping("api/endgame")
 class EndgameController(private val endgameService: EndgameService) {
@@ -19,6 +21,12 @@ class EndgameController(private val endgameService: EndgameService) {
   fun Health(): String {
 
     return "healthy"
+  }
+
+  @CrossOrigin
+  @GetMapping("/search/stragies", produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+  fun Algos(): ResponseEntity<Set<String>> {
+    return ResponseEntity.status(HttpStatus.OK).body(SearchProblem.searchStrategies.keys)
   }
 
   @CrossOrigin

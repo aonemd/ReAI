@@ -1,5 +1,6 @@
 package search;
 
+import java.util.Map;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
@@ -11,6 +12,11 @@ public abstract class SearchProblem {
     public List<Operator> operators;
     public State initialState;
     public int expandedNodesCount = 0;
+    public static Map<String, SearchStrategy> searchStrategies = Map.of(
+            "bfs", new BFS(),
+            "dfs", new DFS() ,
+            "ids", new IDS()
+    );
 
     public abstract String solve(String grid, SearchStrategy searchStrategy, boolean visualize);
 
