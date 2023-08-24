@@ -25,16 +25,19 @@ public abstract class SearchProblem {
         while (!que.isEmpty()) {
             curNode = que.poll();
 
-            if (!visited.add(curNode.state()))
-                continue;
-
             if (curNode.state().goal()) {
                 return curNode;
             }
 
             var expandedNodes = curNode.expand(this.operators, visited);
+            expandedNodes.removeIf(expandedNode -> (!visited.add(expandedNode.state())));
 
-            searchStrategy.addNodes(que, expandedNodes);
+            que = searchStrategy.addNodes(que, expandedNodes);
+
+            if (searchStrategy instanceof IDS && que.isEmpty() && expandedNodes.isEmpty()) {
+                visited.clear();
+                que.offer(new SearchTreeNode(this.initialState, null, null, 0, 0));
+            }
 
             this.expandedNodesCount++;
         }
