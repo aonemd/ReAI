@@ -7,9 +7,14 @@ const Grid = ({ node }) => {
   let thanos = node.state.thanosPosition;
   let stonePositions = node.state.stonePositions;
   let warriorPositions = node.state.warriorPositions;
+  let operator = node.operator;
 
   return (
     <div className="">
+      <div className="flex flex-row justify-center items-center my-2">
+        <span className="font-semibold">{operator.name}</span>
+      </div>
+
       {[...Array(5)].map((_, i) => {
         return (
           <div className="flex flex-row justify-center items-center">
