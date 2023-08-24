@@ -25,6 +25,6 @@ class EndgameService() {
     val numOfNodes = problem.expandedNodesCount
     val score = goal.pathCost()
 
-    return EndgameDto(nodes, score, numOfNodes, algo)
+    return EndgameDto(nodes, score, numOfNodes, algo, problem.getGridWidth(), problem.getGridHeight())
   }
 }

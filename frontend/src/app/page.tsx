@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const Grid = ({ node }) => {
+const Grid = ({ node, w, h }) => {
   let ironMan = node.state.ironManPosition;
   let thanos = node.state.thanosPosition;
   let stonePositions = node.state.stonePositions;
@@ -15,10 +15,10 @@ const Grid = ({ node }) => {
         <span className="font-semibold">{operator.name}</span>
       </div>
 
-      {[...Array(5)].map((_, i) => {
+      {[...Array(w)].map((_, i) => {
         return (
           <div className="flex flex-row justify-center items-center" key={i}>
-            {Array(5)
+            {Array(h)
               .fill("-")
               .map((_, j) => {
                 let cellValue;
@@ -116,7 +116,12 @@ export default function Home() {
     <div>
       <h1>Hell, world!</h1>
 
-      <Grid key={currentNodeIndex} node={data.path[currentNodeIndex]} />
+      <Grid
+        key={currentNodeIndex}
+        node={data.path[currentNodeIndex]}
+        w={data.gridWidth}
+        h={data.gridHeight}
+      />
 
       <div className="flex flex-row justify-center items-center space-x-4 mt-7">
         <div className="capitalize text-lg">

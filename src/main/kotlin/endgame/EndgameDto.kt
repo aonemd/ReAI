@@ -33,4 +33,4 @@ fun SearchTreeNode.toNodeDto() =
         pathCost = pathCost
     )
 
-data class EndgameDto(val path: Array<NodeDto>, val score: Int, val numOfNodes: Int, val algo : String)
+data class EndgameDto(val path: Array<NodeDto>, val score: Int, val numOfNodes: Int, val algo : String, val gridWidth: Int, val gridHeight: Int)

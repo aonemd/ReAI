@@ -38,6 +38,14 @@ public class Endgame extends SearchProblem {
         return "There is no solution";
     }
 
+    public int getGridWidth() {
+        return this.gridWidth;
+    }
+
+    public int getGridHeight() {
+        return this.gridHeight;
+    }
+
     private void parse(String input) {
         // parse grid into useful information
         String[] gridInfo = input.split(";");
