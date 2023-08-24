@@ -20,7 +20,7 @@ public class Main {
 
         long startTime = System.nanoTime();
 
-        String solution = problem.solve(input, new IDS(), true);
+        String solution = problem.solve(input, new UCS(), false);
         System.out.println("\n+++\n" + solution);
 
         long endTime = System.nanoTime();

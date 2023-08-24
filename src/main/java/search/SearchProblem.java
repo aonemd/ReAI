@@ -15,7 +15,8 @@ public abstract class SearchProblem {
     public static Map<String, SearchStrategy> searchStrategies = Map.of(
             "bfs", new BFS(),
             "dfs", new DFS() ,
-            "ids", new IDS()
+            "ids", new IDS(),
+            "ucs", new UCS()
     );
 
     public abstract String solve(String grid, SearchStrategy searchStrategy, boolean visualize);
