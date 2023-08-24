@@ -51,7 +51,7 @@ const Grid = ({ node }) => {
 };
 const Cell = ({ value }) => {
   return (
-    <div className="flex items-center justify-center box-border h-32 w-32 border-4">
+    <div className="flex items-center justify-center box-border h-32 w-32 border-4 text-6xl">
       {value}
     </div>
   );
