@@ -17,7 +17,7 @@ const Grid = ({ node }) => {
 
       {[...Array(5)].map((_, i) => {
         return (
-          <div className="flex flex-row justify-center items-center">
+          <div className="flex flex-row justify-center items-center" key={i}>
             {Array(5)
               .fill("-")
               .map((_, j) => {
@@ -41,7 +41,7 @@ const Grid = ({ node }) => {
                 if (ironMan.x == curCell.x && ironMan.y == curCell.y)
                   cellValue = "I";
 
-                return <Cell key={i} value={cellValue} />;
+                return <Cell key={`${i}${j}`} value={cellValue} />;
               })}
           </div>
         );
