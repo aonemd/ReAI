@@ -29,17 +29,21 @@ const Grid = ({ node }) => {
                     (pos) => pos.x == curCell.x && pos.y == curCell.y
                   )
                 )
-                  cellValue = "S";
+                  // cellValue = "S";
+                  cellValue = "💎";
                 if (
                   warriorPositions.some(
                     (pos) => pos.x == curCell.x && pos.y == curCell.y
                   )
                 )
-                  cellValue = "W";
+                  // cellValue = "W";
+                  cellValue = "👾";
                 if (thanos.x == curCell.x && thanos.y == curCell.y)
-                  cellValue = "T";
+                  // cellValue = "T";
+                  cellValue = "🧌";
                 if (ironMan.x == curCell.x && ironMan.y == curCell.y)
-                  cellValue = "I";
+                  // cellValue = "I";
+                  cellValue = "🦹";
 
                 return <Cell key={`${i}${j}`} value={cellValue} />;
               })}
