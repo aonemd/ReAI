@@ -25,18 +25,40 @@ public abstract class SearchProblem {
         while (!que.isEmpty()) {
             curNode = que.poll();
 
+            // outline
+            // if not visited:
+            //   visit
+            //   mark as visited
+            //   expand neighbors:
+            //      if neighbor is not visited:
+            //          queue append neighbor
+
+            // if (!visited.add(curNode.state())) {
+            //     continue;
+            // }
+
             if (curNode.state().goal()) {
                 return curNode;
             }
 
             var expandedNodes = curNode.expand(this.operators, visited);
+            // System.out.println("expandedNodes:");
+            // expandedNodes.stream().forEach(n -> System.out.println(n.toPlan() + " : " + n.depth()));
+            // System.out.println("*********************************");
             expandedNodes.removeIf(expandedNode -> (!visited.add(expandedNode.state())));
 
             que = searchStrategy.addNodes(que, expandedNodes);
 
+            // System.out.println("que:");
+            // que.stream().forEach(n -> System.out.println(n.toPlan() + " : " + n.depth()));
+            // System.out.println("+++++++++++++++++++++++++++++++++");
+
             if (searchStrategy instanceof IDS && que.isEmpty() && expandedNodes.isEmpty()) {
                 visited.clear();
                 que.offer(new SearchTreeNode(this.initialState, null, null, 0, 0));
+
+                // int level = ((IDS) searchStrategy).level;
+                // System.out.println("---------------- new level:" + level + " ---------------");
             }
 
             this.expandedNodesCount++;
