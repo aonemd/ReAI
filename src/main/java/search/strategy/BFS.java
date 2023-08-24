@@ -7,7 +7,9 @@ import search.SearchTreeNode;
 
 public class BFS implements SearchStrategy {
     @Override
-    public void addNodes(Deque<SearchTreeNode> que, List<SearchTreeNode> newNodes) {
+    public Deque<SearchTreeNode> addNodes(Deque<SearchTreeNode> que, List<SearchTreeNode> newNodes) {
         newNodes.forEach((newNode) -> que.offerLast(newNode));
+
+        return que;
     }
 }
