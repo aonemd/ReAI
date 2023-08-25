@@ -31,6 +31,11 @@ plugins {
   id("org.springframework.boot") version "3.1.2"
   id("io.spring.dependency-management") version "1.1.2"
 }
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(20))
+    }
+}
 apply(plugin = "io.spring.dependency-management")
 
 application {
