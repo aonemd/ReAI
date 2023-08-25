@@ -34,6 +34,11 @@ public record SearchTreeNode(State state, SearchTreeNode parent, Operator operat
         return nodes;
     }
 
+    public int f() {
+        // f() = g() + h()
+        return pathCost() + this.state().calculateHeuristicFuncCost();
+    }
+
     public String toPlan() {
         List<String> planOperators = new ArrayList<String>();
 

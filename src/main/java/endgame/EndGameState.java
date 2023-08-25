@@ -82,6 +82,11 @@ public class EndGameState implements State {
     }
 
     @Override
+    public int calculateHeuristicFuncCost() {
+        return this.warriorPositions().size();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public EndGameState clone() {
         var clonedIronManPosition = new Cell(ironManPosition().x, ironManPosition().y);

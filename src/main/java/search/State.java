@@ -6,6 +6,7 @@ public interface State {
     public boolean valid(int... params);
 
     public int calculateStateCost(int... params);
+    public int calculateHeuristicFuncCost();
 
     public State clone();
 

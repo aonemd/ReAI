@@ -16,7 +16,8 @@ public abstract class SearchProblem {
             "bfs", new BFS(),
             "dfs", new DFS() ,
             "ids", new IDS(),
-            "ucs", new UCS()
+            "ucs", new UCS(),
+            "ass", new AStar()
     );
 
     public abstract String solve(String grid, SearchStrategy searchStrategy, boolean visualize);
