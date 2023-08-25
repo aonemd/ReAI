@@ -24,6 +24,10 @@ public class Cell implements Comparable {
         return this;
     }
 
+    public int distanceFrom(Cell other) {
+        return Math.abs(other.x - this.x)  + Math.abs(other.y - this.y);
+    }
+
     public Cell clone() {
         return new Cell(this.x, this.y);
     }

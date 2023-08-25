@@ -1,6 +1,9 @@
 package endgame;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.function.Function;
 
 import search.State;
 
@@ -11,6 +14,15 @@ public class EndGameState implements State {
     private HashSet<Cell> stonePositions;
     private HashSet<Cell> warriorPositions;
     private static EndGameState emptyState = new EndGameState(false, null, null, null, null);
+
+    private static List<Function<EndGameState, Integer>> heuristicFuncs = Arrays.asList(
+        (EndGameState state) -> { return state.warriorPositions().size(); },
+        (EndGameState state) -> { return state.stonePositions().size(); },
+        (EndGameState state) -> { return -1 * state.ironManPosition().distanceFrom(state.thanosPosition()); },
+        (EndGameState state) -> {
+            return state.warriorPositions().size() * 8 + state.stonePositions().size() * 4;
+        }
+    );
 
     static int dirs[][] = { { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 } };
 
@@ -83,7 +95,7 @@ public class EndGameState implements State {
 
     @Override
     public int calculateHeuristicFuncCost() {
-        return this.warriorPositions().size();
+        return heuristicFuncs.get(3).apply(this);
     }
 
     @Override
