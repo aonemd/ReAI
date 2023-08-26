@@ -20,7 +20,7 @@ public class EndGameState implements State {
         (EndGameState state) -> { return state.stonePositions().size(); },
         (EndGameState state) -> { return -1 * state.ironManPosition().distanceFrom(state.thanosPosition()); },
         (EndGameState state) -> {
-            return state.warriorPositions().size() * 8 + state.stonePositions().size() * 4;
+            return state.warriorPositions().size() * 8 + state.stonePositions().size() * 9;
         }
     );
 
