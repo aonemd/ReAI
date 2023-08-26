@@ -19,6 +19,7 @@ type Node = {
   operator: {
     name: string;
   };
+  pathCost: number;
 };
 type SearchResult = {
   path: Node[];
@@ -36,11 +37,14 @@ type GridProps = {
 };
 const Grid = ({ node, w, h }: GridProps) => {
   let operator = node.operator;
+  let cost = node.pathCost;
 
   return (
     <div className="">
       <div className="flex flex-row justify-center items-center my-2">
-        <span className="font-semibold">{operator.name}</span>
+        <span className="font-semibold">
+          {operator.name}({cost})
+        </span>
       </div>
 
       {[...Array(w)].map((_, i) => {
