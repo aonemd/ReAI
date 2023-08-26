@@ -67,6 +67,7 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [currentNodeIndex, setCurrentNodeIndex] = useState(0);
+  const [paused, setPaused] = useState(true);
 
   async function getAlgos() {
     try {
@@ -102,15 +103,39 @@ export default function Home() {
     callAPI();
   }, []);
 
+  useEffect(() => {
+    var timeout;
+    if (!paused) {
+      timeout = setTimeout(function () {
+        if (currentNodeIndex >= data.path.length - 1) {
+          setPaused(true);
+        } else {
+          const next = currentNodeIndex + 1;
+          setCurrentNodeIndex(next);
+        }
+      }, 300);
+    }
+    return function () {
+      clearTimeout(timeout);
+    };
+  }, [paused, currentNodeIndex]);
+
+  function searchAndPlay() {
+    callAPI();
+    play();
+  }
+  function play() {
+    setPaused(!paused);
+  }
+  function next() {
+    setCurrentNodeIndex(currentNodeIndex + 1);
+  }
+  function previous() {
+    setCurrentNodeIndex(currentNodeIndex - 1);
+  }
+
   if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No profile data</p>;
-
-  if (currentNodeIndex < data.path.length - 1) {
-    setTimeout(() => {
-      console.log("Index updated");
-      setCurrentNodeIndex(currentNodeIndex + 1);
-    }, 300);
-  }
 
   return (
     <div>
@@ -153,9 +178,19 @@ export default function Home() {
 
         <button
           className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent"
-          onClick={callAPI}
+          onClick={searchAndPlay}
         >
           search
+        </button>
+
+        <button className="text-4xl" onClick={previous}>
+          ⬅️
+        </button>
+        <button className="text-4xl" onClick={play}>
+          ⏯️
+        </button>
+        <button className="text-4xl" onClick={next}>
+          ➡️
         </button>
       </div>
     </div>
