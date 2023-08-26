@@ -2,11 +2,39 @@
 
 import { useState, useEffect } from "react";
 
-const Grid = ({ node, w, h }) => {
-  let ironMan = node.state.ironManPosition;
-  let thanos = node.state.thanosPosition;
-  let stonePositions = node.state.stonePositions;
-  let warriorPositions = node.state.warriorPositions;
+type Cell = {
+  x: number;
+  y: number;
+};
+const isSameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
+
+type NodeState = {
+  ironManPosition: Cell;
+  thanosPosition: Cell;
+  stonePositions: Cell[];
+  warriorPositions: Cell[];
+};
+type Node = {
+  state: NodeState;
+  operator: {
+    name: string;
+  };
+};
+type SearchResult = {
+  path: Node[];
+  gridWidth: number;
+  gridHeight: number;
+  score: number;
+  numOfNodes: number;
+  algo: string;
+};
+
+type GridProps = {
+  node: Node;
+  w: number;
+  h: number;
+};
+const Grid = ({ node, w, h }: GridProps) => {
   let operator = node.operator;
 
   return (
@@ -21,31 +49,9 @@ const Grid = ({ node, w, h }) => {
             {Array(h)
               .fill("-")
               .map((_, j) => {
-                let cellValue;
-                let curCell = { x: i, y: j };
-
-                if (
-                  stonePositions.some(
-                    (pos) => pos.x == curCell.x && pos.y == curCell.y
-                  )
-                )
-                  // cellValue = "S";
-                  cellValue = "💎";
-                if (
-                  warriorPositions.some(
-                    (pos) => pos.x == curCell.x && pos.y == curCell.y
-                  )
-                )
-                  // cellValue = "W";
-                  cellValue = "👾";
-                if (thanos.x == curCell.x && thanos.y == curCell.y)
-                  // cellValue = "T";
-                  cellValue = "🧌";
-                if (ironMan.x == curCell.x && ironMan.y == curCell.y)
-                  // cellValue = "I";
-                  cellValue = "🦹";
-
-                return <Cell key={`${i}${j}`} value={cellValue} />;
+                return (
+                  <GridCell key={`${i}${j}`} i={i} j={j} state={node.state} />
+                );
               })}
           </div>
         );
@@ -53,18 +59,37 @@ const Grid = ({ node, w, h }) => {
     </div>
   );
 };
-const Cell = ({ value }) => {
+
+type CellProps = {
+  state: NodeState;
+  i: number;
+  j: number;
+};
+const GridCell = ({ state, i, j }: CellProps) => {
+  let ironMan = state.ironManPosition;
+  let thanos = state.thanosPosition;
+  let stonePositions = state.stonePositions;
+  let warriorPositions = state.warriorPositions;
+
+  let cellValue;
+  let curCell: Cell = { x: i, y: j };
+
+  if (stonePositions.some((s) => isSameCell(curCell, s))) cellValue = "💎";
+  if (warriorPositions.some((w) => isSameCell(curCell, w))) cellValue = "👾";
+  if (isSameCell(curCell, thanos)) cellValue = "🧌";
+  if (isSameCell(curCell, ironMan)) cellValue = "🦹";
+
   return (
     <div className="flex items-center justify-center box-border h-32 w-32 border-4 text-6xl">
-      {value}
+      {cellValue}
     </div>
   );
 };
 
 export default function Home() {
-  const [strategies, setStrategies] = useState(null);
+  const [strategies, setStrategies] = useState<Array<string>>([]);
   const [algo, setAlgo] = useState("bfs");
-  const [data, setData] = useState(null);
+  const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [currentNodeIndex, setCurrentNodeIndex] = useState(0);
   const [paused, setPaused] = useState(true);
@@ -83,14 +108,14 @@ export default function Home() {
     }
   }
 
-  async function callAPI() {
+  async function getSearchResult() {
     try {
       const res = await fetch(
         `http://localhost:8080/api/endgame/search?grid=5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3&algo=${algo}`
       );
       const data = await res.json();
       console.log(data);
-      setData(data);
+      setSearchResult(data);
       setCurrentNodeIndex(0);
       setLoading(false);
     } catch (err) {
@@ -100,14 +125,14 @@ export default function Home() {
 
   useEffect(() => {
     getAlgos();
-    callAPI();
+    getSearchResult();
   }, []);
 
   useEffect(() => {
-    var timeout;
+    var timeout: any;
     if (!paused) {
       timeout = setTimeout(function () {
-        if (currentNodeIndex >= data.path.length - 1) {
+        if (currentNodeIndex >= searchResult!.path.length - 1) {
           setPaused(true);
         } else {
           const next = currentNodeIndex + 1;
@@ -121,7 +146,7 @@ export default function Home() {
   }, [paused, currentNodeIndex]);
 
   function searchAndPlay() {
-    callAPI();
+    getSearchResult();
     play();
   }
   function play() {
@@ -135,7 +160,7 @@ export default function Home() {
   }
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
+  if (!searchResult) return <p>No profile data</p>;
 
   return (
     <div>
@@ -143,20 +168,20 @@ export default function Home() {
 
       <Grid
         key={currentNodeIndex}
-        node={data.path[currentNodeIndex]}
-        w={data.gridWidth}
-        h={data.gridHeight}
+        node={searchResult.path[currentNodeIndex]}
+        w={searchResult.gridWidth}
+        h={searchResult.gridHeight}
       />
 
       <div className="flex flex-row justify-center items-center space-x-4 mt-7">
         <div className="capitalize text-lg">
-          algo: <span className="uppercase">{data.algo}</span>
+          algo: <span className="uppercase">{searchResult.algo}</span>
         </div>
         <div className="capitalize text-lg">|</div>
-        <div className="capitalize text-lg">score: {data.score}</div>
+        <div className="capitalize text-lg">score: {searchResult.score}</div>
         <div className="capitalize text-lg">|</div>
         <div className="capitalize text-lg">
-          expanded nodes: {data.numOfNodes}
+          expanded nodes: {searchResult.numOfNodes}
         </div>
       </div>
 
