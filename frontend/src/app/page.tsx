@@ -164,8 +164,6 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Hell, world!</h1>
-
       <Grid
         key={currentNodeIndex}
         node={searchResult.path[currentNodeIndex]}
@@ -185,9 +183,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center items-center space-x-4 mt-7">
+      <div className="flex flex-row justify-center items-center space-x-4 my-7">
         <select
-          className="py-3 px-4 pr-9 bg-transparent border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+          className="py-3 px-4 pr-9 text-gray-600 bg-transparent border border-gray-200 focus:border-gray-500"
           placeholder="Algo"
           value={algo}
           onChange={(event) => setAlgo(event.target.value)}
@@ -202,7 +200,7 @@ export default function Home() {
         </select>
 
         <button
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent"
+          className="py-2 px-4 text-gray-600 font-semibold uppercase bg-transparent border border-gray-200 hover:border-gray-500"
           onClick={searchAndPlay}
         >
           search
